@@ -1,0 +1,46 @@
+# Sample values.yaml to set up a 3-node Consul Enterprise cluster with 100GB of
+# storage and automatic Connect injection for annotated pods in the "my-app"
+# namespace.
+#
+# To use this, you will first need to create a secret that contains your 
+# enterprise license key, like this:
+# 
+# apiVersion: v1
+# kind: Secret
+# metadata:
+#   name: consul-license
+# data:
+#   key: 01MV4UU43BK5HGYYTOJZWFQMTMNNEWU33JJZKEK....
+
+global:
+  enabled: true
+  domain: consul
+  image: "consul:1.4.2"
+  datacenter: dc1
+
+server:
+  enabled: true
+  replicas: 2
+  bootstrapExpect: 2
+  # enterpriseLicense:
+  #   secretName: "consul-license"
+  #   secretKey: "key"
+  storage: 20Gi
+  connect: true
+
+client:
+  enabled: true
+  grpc: true
+
+dns:
+  enabled: true
+
+ui:
+  enabled: true
+  service:
+    enabled: true
+    type: NodePort
+
+connectInject:
+  enabled: true
+  default: false 

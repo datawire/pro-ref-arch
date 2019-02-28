@@ -1,0 +1,64 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: microdonut
+  labels:
+    app: microdonut
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind:  Mapping
+      name:  microdonut_mapping
+      tls: ambassador-consul
+      prefix: /microdonut/
+      service: https://microdonut:443
+spec:
+  type: ClusterIP
+  selector:
+    app: microdonut
+  ports:
+  - protocol: TCP
+    port: 443
+    targetPort: 20000
+    name: http
+
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: microdonut
+  labels:
+    app: microdonut
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microdonut
+  template:
+    metadata:
+      labels:
+        app: microdonut
+      annotations:
+        "consul.hashicorp.com/connect-inject": "true"
+    spec:
+      containers:
+      - name: microdonut
+        image: danielbryantuk/microdonut:1.5
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 10001
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 10001
+          initialDelaySeconds: 30
+          timeoutSeconds: 1
+        volumeMounts:
+        - name: config-volume
+          mountPath: /config
+      volumes:
+      - name: config-volume
+        configMap:
+          name: tracing-config

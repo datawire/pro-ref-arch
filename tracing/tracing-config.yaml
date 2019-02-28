@@ -1,0 +1,27 @@
+---
+
+kind: ConfigMap
+apiVersion: v1
+metadata:
+    name: tracing-config
+data:
+    tracer_config.properties: |
+        public_directory=../client
+
+        // Selector for the below config blocks
+        tracer=zipkin
+
+        // Jaeger config
+        jaeger.reporter_host=localhost
+        jaeger.reporter_port=5775
+
+        // Zipkin config
+        zipkin.reporter_host=zipkin
+        zipkin.reporter_port=9411
+
+        // LightStep config
+        lightstep.collector_host=collector-http.lightstep.com
+        // The collector_protocol value can either be "http" or "https"
+        lightstep.collector_protocol=http
+        lightstep.collector_port=8081
+        lightstep.access_token={your_token}

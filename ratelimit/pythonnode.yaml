@@ -1,0 +1,52 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: pythonnode
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind: Mapping
+      name: latency_mapping
+      prefix: /latency/
+      rewrite: ""
+      method: GET
+      service: pythonnode.default.svc.cluster.local
+      labels:
+        ambassador:
+          - string_request_label:
+            - pythonnode
+      ---
+      apiVersion: ambassador/v1
+      kind: Mapping
+      name: healthcheck_mapping
+      prefix: /healthcheck
+      rewrite: ""
+      method: GET
+      service: pythonnode.default.svc.cluster.local
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 5000
+  selector:
+    app: pythonnode
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: pythonnode
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: pythonnode
+    spec:
+      containers:
+      - name: pythonnode
+        image: nkrause/api-challenge:latency
+        ports:
+        - name: http-api
+          containerPort: 5000
