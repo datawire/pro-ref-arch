@@ -16,7 +16,7 @@ kubectl create clusterrolebinding my-cluster-admin-binding --clusterrole=cluster
 git clone https://github.com/datawire/pro-ref-arch.git
 ```
 
-3. Add your license key to the `ambassador/ambassador-pro.yaml` file.
+3. Add your license key to the `AMBASSADOR_LICENSE_KEY` environment variable in `ambassador/ambassador-pro.yaml`.
 
 4. Initialize Helm with the appropriate permissions.
 
@@ -38,8 +38,8 @@ This repository is broken into individual modules. The modules should be install
    * `monitoring` which configures Prometheus and Grafana
    * `tracing` which configures Zipkin and distributed tracing
    * `ratelimit` which configures rate limiting
+   * `jwt` JWT validation filter
    * COMING SOON: `keycloak` integration with Keycloak IDP for authentication
-   * COMING SOON: `jwt` JWT validation
    * COMING SOON: `apikey` API key configuration
    * COMING SOON: `istio` Istio configuration
 
@@ -48,10 +48,10 @@ This repository is broken into individual modules. The modules should be install
 1. Install Ambassador with the following commands along with a basic route to the `httpbin` service.
    
    ```
-   kubectl apply -f statsd-sink.yaml
-   kubectl apply -f ambassador-pro.yaml
-   kubectl apply -f ambassador-service.yaml
-   kubectl apply -f httpbin.yaml
+   kubectl apply -f ambassador/statsd-sink.yaml
+   kubectl apply -f ambassador/ambassador-pro.yaml
+   kubectl apply -f ambassador/ambassador-service.yaml
+   kubectl apply -f ambassador/httpbin.yaml
    ```
 
 2. Get the IP address of Ambassador: `kubectl get svc ambassador`.
