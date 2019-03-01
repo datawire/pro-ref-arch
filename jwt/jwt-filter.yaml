@@ -1,0 +1,31 @@
+---
+apiVersion: getambassador.io/v1beta2
+kind: Filter
+metadata:
+  name: jwt-filter
+  namespace: default
+spec:
+  JWT:
+    jwksURI: "https://ambassador-oauth-e2e.auth0.com/.well-known/jwks.json"
+    validAlgorithms:
+      - "none"
+    audience: "myapp"
+    requireAudience: false
+---
+apiVersion: getambassador.io/v1beta2
+kind: FilterPolicy
+metadata:
+  name: httpbin-filterpolicy
+  namespace: default
+spec:
+  # everything defaults to private; you can create rules to make stuff
+  # public, and you can create rules to require additional scopes
+  # which will be automatically checked
+  rules:
+  - host: "*"
+    path: /jwt-httpbin/*
+    filters:
+    - name: jwt-filter
+  - host: "*"
+    path: /httpbin/*
+    filters: null
