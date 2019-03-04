@@ -1,8 +1,13 @@
 # Ambassador Consul Connect Integration
 
-## Consul Connect Setup
+## 1. Consul Connect Setup
 
-We will install Consul via Helm.
+We will install Consul via Helm. Make sure Helm is initialized with the appropriate permissions:
+
+```
+kubectl apply -f init/helm-rbac.yaml
+helm init --service-account=tiller
+```
 
 **Note:** The `values.yaml` file is used to configure the Helm installation. See [documentation](https://www.consul.io/docs/platform/k8s/helm.html#configuration-values-) on different options. We're providing a sample `values.yaml` file.
 
@@ -15,7 +20,7 @@ This will install Consul with Connect enabled.
 
 **Note:** Sidecar auto-injection is not configured by default and can enabled by setting `connectInject.default: true` in the `values.yaml` file.
 
-## Verify the Consul installation
+## 2. Verify the Consul installation
 
 Verify you Consul installation by accessing the Consul UI. 
 
@@ -27,9 +32,13 @@ Go to http://localhost:8500 from a web-browser.
 
 If the UI loads correctly and you see the consul service, it is safe to assume Consul is installed correctly.
 
+## 3. Install Ambassador Pro
+
+Install Ambassador Pro by following the Quick Start at https://www.getambassador.io/user-guide/ambassador-pro-install.
+
 ## Install the demo QoTM service
 
-Next we will deploy the QoTM service. We will do this before deploying the consul connect integration to show how Ambassador requires the secret created by that service to successfully route to the QoTM pod with the connect sidecar
+Next we will deploy the QoTM service. We will do this before deploying the Consul Connect integration to show how Ambassador requires the secret created by that service to successfully route to the QoTM pod with the connect sidecar
 
 ```shell
 kubectl apply -f qotm.yaml
