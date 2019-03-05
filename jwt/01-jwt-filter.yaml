@@ -6,7 +6,7 @@ metadata:
   namespace: default
 spec:
   JWT:
-    jwksURI: "https://ambassador-oauth-e2e.auth0.com/.well-known/jwks.json"
+    jwksURI: "https://getambassador-demo.auth0.com/.well-known/jwks.json"
     validAlgorithms:
       - "none"
     audience: "myapp"
