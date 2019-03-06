@@ -25,7 +25,6 @@ This module configures the Pro rate limiting service.
 2. Configure the `RateLimit`:
 
    ```
-   kubectl apply -f ambassador-pro-ratelimit.yaml
    kubectl apply -f ratelimit.yaml
    ```
    
