@@ -11,10 +11,24 @@ metadata:
       name: ambassador-consul
       hosts: []
       secret: ambassador-consul-connect
+      ---
+      apiVersion: ambassador/v1
+      kind: Module
+      name: tls
+      config:
+        server:
+          enabled: true
+          secret: ambassador-certs
+          redirect_cleartext_from: 80
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
   ports:
-   - port: 80
+   - name: http
+     port: 80
+     targetPort: 80
+   - name: https
+     port: 443
+     targetPort: 443
   selector:
     service: ambassador
