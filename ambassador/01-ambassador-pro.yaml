@@ -32,7 +32,7 @@ spec:
   ports:
   - name: auth-http
     port: 80
-    targetPort: 8080
+    targetPort: 8082
 ---
 apiVersion: v1
 kind: Service
@@ -266,14 +266,14 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 3
       - name: ambassador-pro
-        image: quay.io/datawire/ambassador_pro:amb-sidecar-0.2.0
+        image: quay.io/datawire/ambassador_pro:amb-sidecar-0.2.1
         ports:
         - name: ratelimit-grpc
           containerPort: 8081
         - name: ratelimit-debug
           containerPort: 6070
         - name: auth-http
-          containerPort: 8080
+          containerPort: 8082
         env:
         - name: REDIS_SOCKET_TYPE 
           value: tcp
