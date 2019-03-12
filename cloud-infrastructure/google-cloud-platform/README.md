@@ -31,8 +31,8 @@ Install [Terraform](https://www.terraform.io/downloads.html) according to the in
 Clone this repo and run the `terraform init` command to initialise the directory for further use with Terraform.
 
 ```
-$ git clone git@github.com:danielbryantuk/ambassador-vm-examples.git
-$ cd ambassador-vm-examples
+$ git clone git clone git@github.com:datawire/pro-ref-arch.git
+$ cd pro-ref-arch/cloud-infrastructure/google-cloud-platform
 
 $ terraform init
 ```
