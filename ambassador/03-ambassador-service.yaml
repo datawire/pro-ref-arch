@@ -7,19 +7,16 @@ metadata:
     getambassador.io/config: |
       ---
       apiVersion: ambassador/v1
+      kind: Module
+      name: ambassador
+      config:
+        enable_grpc_web: True
+      ---
+      apiVersion: ambassador/v1
       kind: TLSContext
       name: ambassador-consul
       hosts: []
       secret: ambassador-consul-connect
-      ---
-      apiVersion: ambassador/v1
-      kind: Module
-      name: tls
-      config:
-        server:
-          enabled: true
-          secret: ambassador-certs
-          redirect_cleartext_from: 80
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
