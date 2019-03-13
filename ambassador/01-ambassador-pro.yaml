@@ -266,7 +266,7 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 3
       - name: ambassador-pro
-        image: quay.io/datawire/ambassador_pro:amb-sidecar-0.2.2
+        image: quay.io/datawire/ambassador_pro:amb-sidecar-0.2.3
         ports:
         - name: ratelimit-grpc
           containerPort: 8081
