@@ -27,6 +27,9 @@ spec:
    - name: http
      port: 80
      targetPort: 80
+   - name: qotm-tcp
+     port: 5555
+     targetPort: 5555
    - name: https
      port: 443
      targetPort: 443
