@@ -51,8 +51,6 @@ spec:
         "consul.hashicorp.com/connect-inject": "false"
     spec:
       serviceAccountName: ambassador-pro-consul-connect
-      imagePullSecrets:
-        - name: ambassador-pro-registry-credentials
       terminationGracePeriodSeconds: 0
       containers:
         - name: consul-connect-integration
