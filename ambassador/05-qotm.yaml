@@ -53,7 +53,7 @@ spec:
           containerPort: 5000
         env:
         - name: REQUEST_LIMIT
-          value: 5
+          value: "5"
         readinessProbe:
           httpGet:
             path: /health
