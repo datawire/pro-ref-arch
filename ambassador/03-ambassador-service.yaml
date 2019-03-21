@@ -27,7 +27,8 @@ metadata:
           redirect_cleartext_from: 80
           alpn_protocols: h2
 spec:
-  type: NodePort
+  type: LoadBalancer
+  externalTrafficPolicy: Local
   ports:
    - name: http
      port: 80
