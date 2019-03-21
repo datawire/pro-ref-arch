@@ -17,7 +17,7 @@ Ambassador should already be configured to proxy gRPC-web requests. This is conf
 1. Create the gRPC-web service:
 
    ```
-   kubectl apply -f grpc-web.yaml
+   kubectl apply -f grpc_web.yaml
    ```
 
 2. Update the client with your $AMBASSADOR_IP
@@ -25,7 +25,7 @@ Ambassador should already be configured to proxy gRPC-web requests. This is conf
    Replace $AMBASSADOR_IP in line 7 of `./client/client.js` with the value of your $AMBASSADOR_IP
 
    ```js
-   7. var echoService = new EchoServiceClient('http://$AMBASSADOR_IP', null, null);
+   7. var echoService = new EchoServiceClient('https://$AMBASSADOR_IP', null, null);
    ```
 
 3. Build the client
@@ -35,6 +35,8 @@ Ambassador should already be configured to proxy gRPC-web requests. This is conf
    ```
 
 4. Open  `./client/client.html` in you web-browser
+
+   **Note:** Since Ambassador is using a self-signed certificate you will need to add an exception to your browser to allow requests to `$AMBASSADOR_IP`.
 
 5. This send a request to the backend gRPC echo service. You can see this is the logs from that service:
 
