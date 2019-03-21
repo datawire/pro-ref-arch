@@ -1,17 +1,24 @@
 # Rate limiting
 
+The QoTM service deployed from the Ambassador directory exposes the routes `/qotm/limited/` and `/qotm/open/`. The `/qotm/limited/` can only handle as much load as is defined by the `REQUEST_LIMIT` environment variable (defaults to 5), meaning that after 5 requests in a minute, the server will return a 500 error. The `/qotm/open/` endpoint, however, can handle much more load. 
+
+You can test the by running the `ratelimit.sh` file which sends a request every second. After the fifth request you will see the server a 500 error.
+
+To protect our QoTM app, we need to put a rate limit on the number of requests that are allowed to the `/qotm/limited/` route. 
+
 This module configures the Pro rate limiting service.
 
 1. Observe the `Mapping`s in `ambassador/05-qotm.yaml` we deployed earlier.
 
-   You will see a `labels` applied to the `qotm_mapping`. This configures Ambassador to label the request with the string `qotm`. We will configure Ambassador to `RateLimit` off this label.
+   You will see a `labels` applied to the `qotm_limited_mapping`. This configures Ambassador to label the request with the string `qotm`. We will configure Ambassador to `RateLimit` off this label.
 
-   ```
+   ```yaml
       ---
       apiVersion: ambassador/v1
       kind: Mapping
-      name: qotm_mapping
-      prefix: /qotm/
+      name: qotm_limited_mapping
+      prefix: /qotm/limited/
+      rewrite: /limited/
       service: qotm
       labels:
         ambassador:
@@ -19,7 +26,7 @@ This module configures the Pro rate limiting service.
             - qotm
    ```
 
-   **Note:** There is no label applied to the `quote_mapping`.
+   **Note:** There is no label applied to the `qotm_open_mapping`.
 
 
 2. Configure the `RateLimit`:
@@ -36,6 +43,6 @@ This module configures the Pro rate limiting service.
    ./ratelimit-test.sh
    ```
 
-   This is a simple bash script that sends a `cURL` to http://$AMBASSADOR_IP/qotm/ every second. You will notice that after the 5th request, Ambassador is returning a 429 instead of 200 to requests to the `/qotm/` endpoint.
+   This is a simple bash script that sends a `cURL` to http://$AMBASSADOR_IP/qotm/limited/ every second. You will notice that after the 5th request, Ambassador is returning a 429 instead of 200 to requests to the `/qotm/limited/` endpoint.
    
-   Requests to `/quote/` are not rate limited. 
+   The `/qotm/open/` endpoint does not have the same load restrictions and therefore does not need to be rate limited. 
