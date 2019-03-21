@@ -1,0 +1,71 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grpc-echo
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v0
+      kind:  Mapping
+      grpc: True
+      prefix: /echo.EchoService/
+      rewrite: /echo.EchoService/
+      name:  grpc_echo_mapping
+      service: grpc-echo:8080
+      cors:
+        origins:
+        - "*"
+        methods:
+        - GET
+        - PUT
+        - DELETE
+        - POST
+        - OPTIONS
+        headers:
+        - keep-alive
+        - user-agent
+        - cache-control
+        - content-type
+        - requested-status
+        - content-transfer-encoding
+        - x-accept-content-transfer-encoding
+        - x-accept-response-streaming
+        - access-control-request-headers
+        - x-user-agent
+        - x-grpc-web
+        exposed_headers:
+        - grpc-status
+        - grpc-message
+        max_age: "86400"
+spec:
+  ports:
+  - name: grpc
+    port: 8080
+    targetPort: 8080
+  selector:
+    service: grpc-echo
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: grpc-echo
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        service: grpc-echo
+    spec:
+      containers:
+      - name: grpc-echo
+        image: quay.io/datawire/kat-backend:10
+        ports:
+        - name: grpc-api
+          containerPort: 8080
+        env:
+        - name: DEBUG
+          value: "1"
+        - name: KAT_BACKEND_TYPE
+          value: "grpc_echo"
+      restartPolicy: Always
