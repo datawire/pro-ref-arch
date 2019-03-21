@@ -1,3 +1,5 @@
 **/.terraform/
 **/terraform.tfstate*
 **/secret-variables.tf
+
+node_modules/

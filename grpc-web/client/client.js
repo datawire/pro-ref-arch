@@ -4,7 +4,7 @@ const {EchoServiceClient} = require('./echo_grpc_web_pb.js');
 const grpc = {};
 grpc.web = require('grpc-web');
 
-var echoService = new EchoServiceClient('http://$AMBASSADOR_IP', null, null);
+var echoService = new EchoServiceClient('https://3.82.200.124:30288', null, null);
 const request = new EchoRequest();
 
 function logMapElements(value, key, map) {
