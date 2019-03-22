@@ -121,6 +121,18 @@ spec:
         securityContext:
           allowPrivilegeEscalation: false
           readOnlyRootFilesystem: true
+      - name: readiness-probe
+        image: docker.io/byrnedo/alpine-curl
+        command: ["/bin/sh"]
+        args: ["-c", "while true; do sleep 10000; done"]
+        readinessProbe:
+          exec:
+            command:
+            - /bin/sh
+            - -c
+            # PrometheusRule is the last CRD that it creates
+            - 'curl --fail --oauth2-bearer "$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt "https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/apis/monitoring.coreos.com/v1/prometheusrules"'
+          periodSeconds: 1
       nodeSelector:
         beta.kubernetes.io/os: linux
       securityContext:
