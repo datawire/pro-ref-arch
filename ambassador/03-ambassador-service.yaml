@@ -10,7 +10,13 @@ metadata:
       kind: Module
       name: ambassador
       config:
-        enable_grpc_web: True
+        default_label_domain: ambassador
+        default_labels:
+          ambassador:
+            defaults:
+            - x_limited_user:
+                header: "x-limited-user"
+                omit_if_not_present: true
       ---
       apiVersion: ambassador/v1
       kind: TLSContext
