@@ -200,7 +200,7 @@ spec:
       serviceAccountName: ambassador
       containers:
       - name: ambassador
-        image: quay.io/datawire/ambassador:grpc-web-merged-63b08e6
+        image: quay.io/datawire/ambassador:0.52.0
         resources:
           limits:
             cpu: 1
