@@ -2,4 +2,9 @@
 terraform.tfstate*
 secret-variables.tf
 
+/env.sh
+
+# kubeapply
+*.o
+
 node_modules/
