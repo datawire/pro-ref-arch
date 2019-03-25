@@ -28,7 +28,7 @@ apply-consul-connect-integration: apply-ambassador apply-consul-connect
 apply-consul-connect: ## Apply Helm chart to install Consul to the cluster
 apply-consul-connect: apply-helm
 	helm repo add consul https://consul-helm-charts.storage.googleapis.com
-	helm install --name=consul consul/consul -f ./consul-connect/values.yaml
+	[ -n "$$(helm ls --all consul)" ] || helm install --name=consul consul/consul -f ./consul-connect/values.yaml
 	set -a && . ./env.sh && $(KUBEAPPLY) -f consul-connect/qotm.yaml
 apply-helm: ## Apply YAML to ensure that Helm has appropriate permissions
 apply-helm: $(KUBECONFIG)
