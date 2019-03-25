@@ -22,11 +22,14 @@ apply-ambassador: ## Apply YAML for Ambassador Pro
 
 # TODO: cloud-infrastructure
 
+env.sh:
+	$(error 'env.sh' does not exist.  Copy 'env.sh.example' to 'env.sh' and edit it to include your Pro license key)
+
 apply-consul-connect-integration: ## Apply YAML for integration between Consul and Ambassador Pro
-apply-consul-connect-integration: apply-ambassador apply-consul-connect
+apply-consul-connect-integration: apply-ambassador apply-consul-connect env.sh
 	set -a && . ./env.sh && $(KUBEAPPLY) -f consul-connect/ambassador-consul-connector.yaml
 apply-consul-connect: ## Apply Helm chart to install Consul to the cluster
-apply-consul-connect: apply-helm
+apply-consul-connect: apply-helm env.sh
 	helm repo add consul https://consul-helm-charts.storage.googleapis.com
 	[ -n "$$(helm ls --all consul)" ] || helm install --name=consul consul/consul -f ./consul-connect/values.yaml
 	set -a && . ./env.sh && $(KUBEAPPLY) -f consul-connect/qotm.yaml

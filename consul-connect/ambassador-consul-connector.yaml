@@ -54,7 +54,7 @@ spec:
       terminationGracePeriodSeconds: 0
       containers:
         - name: consul-connect-integration
-          image: quay.io/datawire/ambassador_pro:consul_connect_integration-0.2.4
+          image: quay.io/datawire/ambassador_pro:consul_connect_integration-{{env "AMBASSADOR_PRO_VERSION"}}
           imagePullPolicy: Always
           resources:
             limits:
