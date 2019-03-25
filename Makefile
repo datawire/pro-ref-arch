@@ -31,8 +31,9 @@ apply-consul-connect: apply-helm
 	helm install --name=consul consul/consul -f ./consul-connect/values.yaml
 	set -a && . ./env.sh && $(KUBEAPPLY) -f consul-connect/qotm.yaml
 apply-helm: ## Apply YAML to ensure that Helm has appropriate permissions
+apply-helm: $(KUBECONFIG)
 	$(KUBEAPPLY) -f init/helm-rbac.yaml
-	helm init --service-account=tiller
+	helm init --wait --service-account=tiller
 
 # TODO: grpc-web
 
