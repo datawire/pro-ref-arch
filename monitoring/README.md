@@ -2,21 +2,10 @@
 
 This will install both Prometheus and Grafana for metrics collection and visualization.
 
-1. Install the Prometheus Operator.
+1. Install the Prometheus Operator, Grafana, and configure the operator.
 
    ```
-   kubectl apply -f 00-prometheus.yaml
-   ```
-
-2. Wait 30 seconds until the `prometheus-operator` pod is in the `Running` state.
-
-3. Create the rest of the monitoring setup:
-
-   ```
-   kubectl apply -f 01-prom-cluster.yaml
-   kubectl apply -f 02-prom-svc.yaml
-   kubectl apply -f 03-servicemonitor.yaml
-   kubectl apply -f 04-grafana.yaml
+   make apply-monitoring
    ```
 
 4. Send some traffic through Ambassador (metrics won't appear until some traffic is sent). You can just run the `curl` command to httpbin above a few times.
