@@ -5,7 +5,7 @@ JWTs are validated using public keys supplied in a JWKS file. For the purposes o
 1. Configure the JWT filter and JWT-authenticated `httpbin` test service:
 
    ```
-   kubectl apply -f jwt/
+   make apply-jwt
    ```
 
 2. Send a valid JWT to the `jwt-httpbin` URL:

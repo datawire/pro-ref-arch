@@ -6,21 +6,21 @@ This repository contains a core set of tested configurations for Ambassador Pro 
 
 If you're new to Ambassador Pro, check out https://www.getambassador.io/user-guide/ambassador-pro-install for a quick start.
 
-
 ## Installing the reference architecture
 
-This repository is broken into individual modules. The modules should be installed in the following order.
+This repository is broken into individual modules. A standard `Makefile` is provided that will deploy the modules into a Kubernetes cluster. The following modules are available:
 
-1. Service mesh. Currently the only service mesh module available is the `consul-connect` module. Follow the instructions in the `consul-connect/README.md` to set up Consul Connect.
 
-2. Ambassador. Instructions on deploying Ambassador are covered in the Quickstart.
+* Ambassador (`make apply-ambassador`)
+* Consul Connect (`make apply-consul-connect`)
+* Consul Connect integration (`make apply-consul-connect-integration`)
+* JWT (`make apply-jwt`)
+* Monitoring (`make apply-monitoring`): Set up Prometheus and Grafana
+* Rate limiting (`make apply-ratelimit`)
+* Tracing (`make apply-tracing`): Zipkin and tracing example
 
-3. Add-on modules. These can be installed in any order. The current list of add-on modules are. The specific instructions for each add-on module is in the README file in each of the add-on directories.
-  
-   * `monitoring` which configures Prometheus and Grafana
-   * `tracing` which configures Zipkin and distributed tracing
-   * `ratelimit` which configures rate limiting
-   * `jwt` JWT validation filter
-   * COMING SOON: `keycloak` integration with Keycloak IDP for authentication
-   * COMING SOON: `apikey` API key configuration
-   * COMING SOON: `istio` Istio configuration
+Still to come:
+
+   * `keycloak` integration with Keycloak IDP for authentication
+   * `apikey` API key configuration
+   * `istio` Istio configuration

@@ -1,3 +1,4 @@
+# @TEMPLATE@
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRole
@@ -200,7 +201,7 @@ spec:
       serviceAccountName: ambassador
       containers:
       - name: ambassador
-        image: quay.io/datawire/ambassador:0.52.0
+        image: quay.io/datawire/ambassador:{{env "AMBASSADOR_OSS_VERSION"}}
         resources:
           limits:
             cpu: 1
@@ -235,7 +236,7 @@ spec:
           initialDelaySeconds: 30
           periodSeconds: 3
       - name: ambassador-pro
-        image: quay.io/datawire/ambassador_pro:amb-sidecar-0.2.4
+        image: quay.io/datawire/ambassador_pro:amb-sidecar-{{env "AMBASSADOR_PRO_VERSION"}}
         ports:
         - name: ratelimit-grpc
           containerPort: 8081
@@ -251,5 +252,5 @@ spec:
         - name: REDIS_URL 
           value: ambassador-pro-redis:6379
         - name: AMBASSADOR_LICENSE_KEY 
-          value: ""
+          value: {{env "AMBASSADOR_LICENSE_KEY"}}
       restartPolicy: Always
