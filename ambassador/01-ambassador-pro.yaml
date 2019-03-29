@@ -8,6 +8,8 @@ rules:
 - apiGroups: [""]
   resources:
   - services
+  - endpoints
+  - namespaces
   verbs: ["get", "list", "watch"]
 - apiGroups: [""]
   resources:
