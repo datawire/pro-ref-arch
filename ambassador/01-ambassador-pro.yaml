@@ -150,21 +150,16 @@ metadata:
       apiVersion: ambassador/v1
       kind: AuthService
       name: ambassador-pro-auth
-      proto: http
+      proto: grpc
       auth_service: 127.0.0.1:8082
-      allowed_request_headers:
-      - "Client-Id"
-      - "Client-Secret"
-      allowed_authorization_headers:
-      - "Authorization"
-      - "Client-Id"
-      - "Client-Secret"
+      allow_request_body: false # setting this to 'true' allows Plugin and External filters to access the body, but has performance overhead
       ---
+      # This mapping needs to exist, but is never actually followed.
       apiVersion: ambassador/v1
       kind: Mapping
       name: callback_mapping
       prefix: /callback
-      service: 127.0.0.1:8082
+      service: NoTaReAlSeRvIcE
       ---
       apiVersion: ambassador/v1
       kind: RateLimitService
