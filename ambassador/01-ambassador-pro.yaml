@@ -256,4 +256,7 @@ spec:
           value: ambassador-pro-redis:6379
         - name: AMBASSADOR_LICENSE_KEY 
           value: {{env "AMBASSADOR_LICENSE_KEY"}}
+      securityContext:
+        runAsUser: 8888
       restartPolicy: Always
+  
