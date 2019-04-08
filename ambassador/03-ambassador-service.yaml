@@ -10,6 +10,7 @@ metadata:
       kind: Module
       name: ambassador
       config:
+        service_port: 8443
         enable_grpc_web: true
         default_label_domain: ambassador
         default_labels:
@@ -31,7 +32,7 @@ metadata:
       config:
         server:
           enabled: True
-          redirect_cleartext_from: 80
+          redirect_cleartext_from: 8080
           alpn_protocols: h2
 spec:
   type: LoadBalancer
@@ -39,9 +40,9 @@ spec:
   ports:
    - name: http
      port: 80
-     targetPort: 80
+     targetPort: 8080
    - name: https
      port: 443
-     targetPort: 443
+     targetPort: 8443
   selector:
     service: ambassador
