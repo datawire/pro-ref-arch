@@ -257,3 +257,5 @@ spec:
         - name: AMBASSADOR_LICENSE_KEY 
           value: {{env "AMBASSADOR_LICENSE_KEY"}}
       restartPolicy: Always
+      securityContext:
+        runAsUser: 8888
