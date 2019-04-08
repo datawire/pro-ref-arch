@@ -52,5 +52,7 @@ apply-ratelimit: apply-ambassador
 apply-tracing: ## Apply YAML for Zipkin and distributed tracing
 apply-tracing: apply-ambassador
 
+apply-upgrade-to-pro: 
+
 clean:
 	rm -f */*.o
