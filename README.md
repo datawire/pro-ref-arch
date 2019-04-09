@@ -22,9 +22,13 @@ This repository is broken into individual modules. A standard `Makefile` is prov
 * Monitoring (`make apply-monitoring`): Set up Prometheus and Grafana
 * Rate limiting (`make apply-ratelimit`)
 * Tracing (`make apply-tracing`): Zipkin and tracing example
+* Upgrading (`make apply-upgrade-to-pro`): For upgrading to Ambassador Pro from open source
+
+**Note:** `make apply-ambassador` configures Ambassador Pro to be secured by a self-signed certificate. The other modules in this reference architecture assume this is the case. 
 
 Still to come:
 
    * `keycloak` integration with Keycloak IDP for authentication
    * `apikey` API key configuration
    * `istio` Istio configuration
+
