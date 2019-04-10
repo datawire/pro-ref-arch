@@ -41,16 +41,12 @@ apply-helm: $(KUBECONFIG)
 # TODO: grpc-web
 
 apply-jwt: ## Apply YAML for JWT validation filter
-apply-jwt: apply-ambassador
 
 apply-monitoring: ## Apply YAML for Prometheus and Grafana
-apply-monitoring: apply-ambassador
 
 apply-ratelimit: ## Apply YAML for rate limiting
-apply-ratelimit: apply-ambassador
 
 apply-tracing: ## Apply YAML for Zipkin and distributed tracing
-apply-tracing: apply-ambassador
 
 apply-upgrade-to-pro: 
 
