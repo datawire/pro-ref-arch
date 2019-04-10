@@ -47,7 +47,7 @@ kubectl apply -f qotm.yaml
 Then send a curl to the service to verify it does not work.
 
 ```shell
-curl -v http://{AMBASSADOR_IP}/qotm/
+curl -v -k https://{AMBASSADOR_IP}/qotm/
 
 < HTTP/1.1 503 Service Unavailable
 < content-length: 57
@@ -101,7 +101,7 @@ consul-connect-injector-webhook-svc-account-token-4xpw9   kubernetes.io/service-
 #### Send a request to QoTM
 
 ```shell
-curl -v http://{AMBASSADOR_IP}/qotm/
+curl -v -k https://{AMBASSADOR_IP}/qotm/
 
 < HTTP/1.1 200 OK
 < content-type: application/json
