@@ -7,5 +7,16 @@ as an OpenID Connect authentication server.
 2. Get the `External-IP` for your Ambassador service `kubectl get svc ambassador`
 3. Create an OAuth app in GitHub
     - Name: Ambassador Pro Auth Demo
-    - Homepage URL: example.com
+    - Homepage URL: `example.com`
     - Authorization callback URL: http://${AMBASSADOR_IP}/auth/realms/demo/broker/github/endpoint
+4. Add to `env.sh` the following environment variables:
+
+```bash
+
+CLIENT_ID=<Client ID from GitHub>
+CLIENT_SECRET=<Client Secret from GitHub>
+```
+
+5. Replace the `${AMBASSADOR_IP}` values in [00-tenant.yaml](00-tenant.yaml)
+6. Run `make apply-api-auth`
+7. Go to `https://${AMBASSADOR_IP}/httpbin/headers` and you will be asked to login. Select the `GitHub` option.

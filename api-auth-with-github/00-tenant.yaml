@@ -4,8 +4,8 @@ metadata:
   name: keycloak
 spec:
   OAuth2:
-    authorizationURL: https://3.81.230.220:31372/auth/realms/demo
-    clientURL: https://3.81.230.220:31372
+    authorizationURL: https://${AMBASSADOR_IP}/auth/realms/demo
+    clientURL: https://${AMBASSADOR_IP}
     audience: app
     clientID: app
     secret: 8517c278-0ae8-40e5-b418-20199b7e3fb5
