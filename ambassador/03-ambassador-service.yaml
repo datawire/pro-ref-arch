@@ -40,10 +40,8 @@ spec:
   ports:
    - name: http
      port: 80
-     nodePort: 31080
      targetPort: 8080
    - name: https
-     nodePort: 31443
      port: 443
      targetPort: 8443
   selector:
