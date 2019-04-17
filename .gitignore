@@ -8,3 +8,5 @@ secret-variables.tf
 *.o
 
 node_modules/
+
+.idea

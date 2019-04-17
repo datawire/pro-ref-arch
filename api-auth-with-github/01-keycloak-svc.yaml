@@ -1,0 +1,24 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind:  Mapping
+      name:  keycloak_demo_github_endpoint
+      prefix: /auth
+      rewrite: ""
+      service: keycloak
+  labels:
+    app: keycloak
+spec:
+  type: NodePort
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
+  selector:
+    app: keycloak

@@ -1,0 +1,12 @@
+---
+apiVersion: getambassador.io/v1beta2
+kind: FilterPolicy
+metadata:
+  name: httpbin-policy
+spec:
+  rules:
+    - host: "*"
+      path: /httpbin/headers
+      public: false
+      filters:
+        - name: keycloak
