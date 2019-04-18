@@ -151,7 +151,7 @@ metadata:
       kind: AuthService
       name: ambassador-pro-auth
       proto: grpc
-      auth_service: 127.0.0.1:8082
+      auth_service: 127.0.0.1:8501
       allow_request_body: false # setting this to 'true' allows Plugin and External filters to access the body, but has performance overhead
       ---
       # This mapping needs to exist, but is never actually followed.
@@ -164,7 +164,7 @@ metadata:
       apiVersion: ambassador/v1
       kind: RateLimitService
       name: ambassador-pro-ratelimit
-      service: "127.0.0.1:8081"
+      service: "127.0.0.1:8500"
 
 spec:
   type: NodePort
@@ -241,12 +241,12 @@ spec:
       - name: ambassador-pro
         image: quay.io/datawire/ambassador_pro:amb-sidecar-{{env "AMBASSADOR_PRO_VERSION"}}
         ports:
-        - name: ratelimit-grpc
-          containerPort: 8081
-        - name: ratelimit-debug
-          containerPort: 6070
-        - name: auth-http
-          containerPort: 8082
+        - name: grpc-auth
+          containerPort: 8500
+        - name: grpc-ratelimit
+          containerPort: 8501
+        - name: http-debug
+          containerPort: 8502
         env:
         - name: REDIS_SOCKET_TYPE 
           value: tcp
