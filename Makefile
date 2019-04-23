@@ -29,12 +29,12 @@ apply-api-auth: apply-ambassador
 	set -a && . ./env.sh && $(KUBEAPPLY) -f api-auth-with-github
 
 apply-consul-connect-integration: ## Apply YAML for integration between Consul and Ambassador Pro
-apply-consul-connect-integration: apply-ambassador apply-consul-connect env.sh
+apply-consul-connect-integration: apply-consul-connect env.sh
 	set -a && . ./env.sh && $(KUBEAPPLY) -f consul-connect/ambassador-consul-connector.yaml
 apply-consul-connect: ## Apply Helm chart to install Consul to the cluster
 apply-consul-connect: apply-helm env.sh
 	helm repo add consul https://consul-helm-charts.storage.googleapis.com
-	[ -n "$$(helm ls --all consul)" ] || helm install --name=consul consul/consul -f ./consul-connect/values.yaml
+	[ -n "$$(helm ls --all consul)" ] || helm install --wait --name=consul consul/consul -f ./consul-connect/values.yaml
 	set -a && . ./env.sh && $(KUBEAPPLY) -f consul-connect/qotm.yaml
 apply-helm: ## Apply YAML to ensure that Helm has appropriate permissions
 apply-helm: $(KUBECONFIG)

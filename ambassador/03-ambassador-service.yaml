@@ -20,12 +20,6 @@ metadata:
                 omit_if_not_present: true
       ---
       apiVersion: ambassador/v1
-      kind: TLSContext
-      name: ambassador-consul
-      hosts: []
-      secret: ambassador-consul-connect
-      ---
-      apiVersion: ambassador/v1
       kind: Module
       name: tls
       config:
@@ -33,6 +27,12 @@ metadata:
           enabled: True
           redirect_cleartext_from: 8080
           alpn_protocols: h2
+      ---
+      apiVersion: ambassador/v1
+      kind: ConsulResolver
+      name: consul-dc1
+      address: consul-server.default.svc.cluster.local:8500
+      datacenter: dc1
 spec:
   type: LoadBalancer
   externalTrafficPolicy: Local
