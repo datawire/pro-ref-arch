@@ -7,19 +7,18 @@ metadata:
     getambassador.io/config: |
       ---
       apiVersion: ambassador/v1
-      kind:  Mapping
-      name:  qotm_consul_mapping
-      prefix: /qotm/
+      kind: Mapping
+      name: qotm_consul_mapping
+      prefix: /qotm-consul/
+      service: qotm-proxy
+      resolver: consul-dc1
       tls: ambassador-consul
-      service: https://qotm-consul:443
+      load_balancer:
+        policy: round_robin
 spec:
-  type: NodePort
-  selector:
-    app: qotm-consul
   ports:
-  - port: 443
-    name: https-qotm
-    targetPort: 20000
+  - name: http
+    port: 80
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
@@ -38,7 +37,7 @@ spec:
     spec:
       containers:
       - name: qotm
-        image: datawire/qotm:1.4
+        image: datawire/qotm:1.7
         ports:
         - name: http-api
           containerPort: 5000

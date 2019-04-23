@@ -1,114 +1,35 @@
 # Ambassador Consul Connect Integration
 
-## 1. Consul Connect Setup
+Ambassador integrates with Consul for service discovery and end-to-end TLS in your data center. This guide will quickly get Consul and a demo QoTM application installed with the Connect sidecar proxy enabled for mTLS between Ambassador and the QoTM service.
 
-We will install Consul via Helm. Make sure Helm is initialized with the appropriate permissions:
+## 1. Deploy Ambassador if you have not yet.
 
 ```
-kubectl apply -f init/helm-rbac.yaml
-helm init --service-account=tiller
+make apply-ambassador
 ```
 
-**Note:** The `values.yaml` file is used to configure the Helm installation. See [documentation](https://www.consul.io/docs/platform/k8s/helm.html#configuration-values-) on different options. We're providing a sample `values.yaml` file.
+## 2. Deploy Consul, the Connect integration, and the QoTM demo application
 
-```shell
-helm repo add consul https://consul-helm-charts.storage.googleapis.com
-helm install --name=consul consul/consul -f ./consul-connect/values.yaml
+```
+make apply-consul-connect-integration
 ```
 
-This will install Consul with Connect enabled. 
+- Deploys Consul with Connect enabled using Consul's Helm chart. You can view the `values.yaml` file in this directory to see how Consul is configured.
+- Deploys the QoTM application with the Connect sidecar proxy injected to enable mTLS between itself and Ambassador.
+- Deploys the `ambassador-consul-connect-integration` to expose Consul Connect's TLS certificates to Ambassador.
+- Registers a `Mapping` in Ambassador which will use Consul service discovery to route to the endpoint of the `qotm-proxy` service. 
 
-**Note:** Sidecar auto-injection is not configured by default and can enabled by setting `connectInject.default: true` in the `values.yaml` file.
+## 3. Send a request to the QoTM application via the Connect sidecar proxy
 
-## 2. Verify the Consul installation
+```
+curl -k https://$AMBASSADOR_IP/qotm-consul
 
-Verify you Consul installation by accessing the Consul UI. 
-
-```shell
-kubectl port-forward service/consul-ui 8500:80
+{"hostname":"qotm-consul-79dc57bf8-mzvln","ok":true,"quote":"The light at the end of the tunnel is interdependent on the relatedness of motivation, subcultures, and management.","time":"2019-04-23T17:10:47.970806","version":"1.7"}
 ```
 
-Go to http://localhost:8500 from a web-browser.
+This request is sent through Ambassador directly to the Connect sidecar running in the `qotm-consul` pod. Ambassador encrypts this request using the TLS certificates exposed through the `ambassador-consul-connect-integration`. 
 
-If the UI loads correctly and you see the consul service, it is safe to assume Consul is installed correctly.
+For more information on how Ambassador uses Consul service discovery to route to Consul endpoints:
 
-## 3. Install Ambassador Pro
-
-Install Ambassador Pro by following the Quick Start at https://www.getambassador.io/user-guide/ambassador-pro-install.
-
-## Install the demo QoTM service
-
-Next we will deploy the QoTM service. We will do this before deploying the Consul Connect integration to show how Ambassador requires the secret created by that service to successfully route to the QoTM pod with the connect sidecar
-
-```shell
-kubectl apply -f qotm.yaml
-```
-
-Then send a curl to the service to verify it does not work.
-
-```shell
-curl -v -k https://{AMBASSADOR_IP}/qotm/
-
-< HTTP/1.1 503 Service Unavailable
-< content-length: 57
-< content-type: text/plain
-< date: Thu, 21 Feb 2019 16:29:30 GMT
-< server: envoy
-< 
-upstream connect error or disconnect/reset before headers[nkrause@MacBook-Pro consul-connect
-```
-
-## Install the Consul Connect Integration
-
-Finally we will install the connect integration so Ambassador can route to the connect-powered QoTM service.
-
-```shell
-kubectl apply -f ambassador-consul-connector.yaml
-```
-
-#### Verify the pod started correctly
-
-```shell
-kubectl get pods 
-
-NAME                                                          READY   STATUS    RESTARTS   AGE
-ambassador-77767b7667-hc7q4                                   2/2     Running   3          18m
-ambassador-pro-consul-connect-integration-6d7d489b4b-fwndt    1/1     Running   0          12m
-ambassador-pro-redis-6cbb7dfbb-pzg66                          1/1     Running   0          18m
-consul-76ks4                                                  1/1     Running   0          26m
-consul-connect-injector-webhook-deployment-7846847f9f-r8w8p   1/1     Running   0          26m
-consul-p89q4                                                  1/1     Running   0          26m
-consul-server-0                                               1/1     Running   0          26m
-consul-server-1                                               1/1     Running   0          26m
-consul-server-2                                               1/1     Running   0          26m
-consul-vvl7b                                                  1/1     Running   0          25m
-qotm-794f5c7665-26bf9                                         2/2     Running   0          20m
-```
-
-#### Verify the secret `ambassador-consul-connect` was created 
-
-```shell
-kubectl get secrets
-
-ambassador-consul-connect                                 kubernetes.io/tls                     2     
-ambassador-pro-consul-connect-token-j67gs                 kubernetes.io/service-account-token   3     
-ambassador-pro-registry-credentials                       kubernetes.io/dockerconfigjson        1     
-ambassador-token-xsv9r                                    kubernetes.io/service-account-token   3     
-cert-manager-token-tggkd                                  kubernetes.io/service-account-token   3     
-consul-connect-injector-webhook-svc-account-token-4xpw9   kubernetes.io/service-account-token   3     
-```
-
-#### Send a request to QoTM
-
-```shell
-curl -v -k https://{AMBASSADOR_IP}/qotm/
-
-< HTTP/1.1 200 OK
-< content-type: application/json
-< content-length: 164
-< server: envoy
-< date: Thu, 21 Feb 2019 16:30:15 GMT
-< x-envoy-upstream-service-time: 129
-< 
-{"hostname":"qotm-794f5c7665-26bf9","ok":true,"quote":"The last sentence you read is often sensible nonsense.","time":"2019-02-21T16:30:15.572494","version":"1.3"}
-```
+[Consul Service Discovery](https://www.getambassador.io/user-guide/consul)
+[End-to-end TLS with Consul](https://www.getambassador.io/reference/core/tls/#consul-mtls)
