@@ -151,7 +151,7 @@ metadata:
       kind: AuthService
       name: ambassador-pro-auth
       proto: grpc
-      auth_service: 127.0.0.1:8501
+      auth_service: 127.0.0.1:8500
       allow_request_body: false # setting this to 'true' allows Plugin and External filters to access the body, but has performance overhead
       ---
       # This mapping needs to exist, but is never actually followed.
@@ -164,7 +164,7 @@ metadata:
       apiVersion: ambassador/v1
       kind: RateLimitService
       name: ambassador-pro-ratelimit
-      service: "127.0.0.1:8500"
+      service: "127.0.0.1:8501"
 
 spec:
   type: NodePort
@@ -221,9 +221,9 @@ spec:
           value: "true"
         ports:
         - name: http
-          containerPort: 80
+          containerPort: 8080
         - name: https
-          containerPort: 443
+          containerPort: 8443
         - name: admin
           containerPort: 8877
         livenessProbe:
