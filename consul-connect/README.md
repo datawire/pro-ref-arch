@@ -22,7 +22,7 @@ make apply-consul-connect-integration
 ## 3. Send a request to the QoTM application via the Connect sidecar proxy
 
 ```
-curl -k https://$AMBASSADOR_IP/qotm-consul
+curl -k https://$AMBASSADOR_IP/qotm-consul/
 
 {"hostname":"qotm-consul-79dc57bf8-mzvln","ok":true,"quote":"The light at the end of the tunnel is interdependent on the relatedness of motivation, subcultures, and management.","time":"2019-04-23T17:10:47.970806","version":"1.7"}
 ```
