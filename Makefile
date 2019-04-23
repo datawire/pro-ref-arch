@@ -25,7 +25,7 @@ apply-ambassador: ## Apply YAML for Ambassador Pro
 env.sh:
 	$(error 'env.sh' does not exist.  Copy 'env.sh.example' to 'env.sh' and edit it to include your Pro license key)
 
-apply-api-auth: apply-ambassador
+apply-api-auth:
 	set -a && . ./env.sh && $(KUBEAPPLY) -f api-auth-with-github
 
 apply-consul-connect-integration: ## Apply YAML for integration between Consul and Ambassador Pro
