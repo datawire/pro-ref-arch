@@ -26,6 +26,3 @@ spec:
     path: /jwt-httpbin/*
     filters:
     - name: jwt-filter
-  - host: "*"
-    path: /httpbin/*
-    filters: null
