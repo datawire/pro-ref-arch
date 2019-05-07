@@ -1,10 +1,14 @@
-# Set to non-empty to use kubernaut+teleproxy
+# Set to non-empty to use kubernaut or teleproxy
 USE_KUBERNAUT ?=
+USE_TELEPROXY ?=
 
 NAME = pro-ref-arch
 include build-aux/kubeapply.mk
 include build-aux/help.mk
 ifneq ($(USE_KUBERNAUT),)
+  include build-aux/kubernaut-ui.mk
+endif
+ifneq ($(USE_TELEPROXY),)
   include build-aux/teleproxy.mk
 endif
 .DEFAULT_GOAL = help
