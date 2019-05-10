@@ -32,6 +32,9 @@ env.sh:
 apply-api-auth:
 	set -a && . ./env.sh && $(KUBEAPPLY) -f api-auth-with-github
 
+apply-dev-portal:
+	set -a && . ./env.sh && $(KUBEAPPLY) -f dev-portal
+
 apply-consul-connect-integration: ## Apply YAML for integration between Consul and Ambassador Pro
 apply-consul-connect-integration: apply-consul-connect env.sh
 	set -a && . ./env.sh && $(KUBEAPPLY) -f consul-connect/ambassador-consul-connector.yaml
