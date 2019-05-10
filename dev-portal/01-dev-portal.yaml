@@ -91,16 +91,16 @@ spec:
             # Change this to the main public address for your API (i.e. the
             # default address exposed by Ambassador):
             - name: PUBLIC_API_URL
-              value: "https://ambassador.svc.cluster.local"
+              value: "https://${AMBASSADOR_IP}"
             # Change this if you want different poll rate for getting OpenAPI docs:
             - name: POLL_EVERY_SECS
               value: "5"
             - name: AMBASSADOR_LICENSE_KEY
               value: {{env "AMBASSADOR_LICENSE_KEY"}}
             - name: AMBASSADOR_URL
-              value: https://ambassador.svc.cluster.local:443
+              value: https://ambassador
             - name: DIAGD_URL
-              value: http://ambassador-admin.standalone:8877
+              value: http://ambassador-admin:8877
           ports:
             - name: devportal-ui
               containerPort: 8680
