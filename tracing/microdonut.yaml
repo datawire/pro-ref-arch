@@ -1,27 +1,26 @@
 ---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: microdonut
+spec:
+  prefix: /microdonut/
+  service: microdonut
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: microdonut
   labels:
     app: microdonut
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v1
-      kind:  Mapping
-      name:  microdonut_mapping
-      tls: ambassador-consul
-      prefix: /microdonut/
-      service: https://microdonut:443
 spec:
   type: ClusterIP
   selector:
     app: microdonut
   ports:
   - protocol: TCP
-    port: 443
-    targetPort: 20000
+    port: 80
+    targetPort: 10001
     name: http
 
 ---
@@ -40,8 +39,6 @@ spec:
     metadata:
       labels:
         app: microdonut
-      annotations:
-        "consul.hashicorp.com/connect-inject": "true"
     spec:
       containers:
       - name: microdonut

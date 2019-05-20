@@ -1,32 +1,62 @@
 ---
+apiVersion: getambassador.io/v1
+kind: Module
+metadata:
+  name: ambassador
+spec:
+  config:
+    enable_grpc_web: true
+    default_label_domain: ambassador
+    default_labels:
+      ambassador:
+        defaults:
+        - x_limited_user:
+            header: "x-limited-user"
+            omit_if_not_present: true
+---
+apiVersion: getambassador.io/v1
+kind: Module
+metadata:
+  name: tls
+spec:
+  config:
+    server:
+      enabled: True
+      redirect_cleartext_from: 8080
+      alpn_protocols: h2
+---
+apiVersion: getambassador.io/v1
+kind: RateLimitService
+metadata:
+  name: ambassador-pro-ratelimit
+spec:
+  service: "127.0.0.1:8501"
+---
+apiVersion: getambassador.io/v1
+kind: AuthService
+metadata:
+  name: ambassador-pro-auth
+spec:
+  proto: grpc
+  auth_service: 127.0.0.1:8500
+  allow_request_body: false # setting this to 'true' allows Plugin and External filters to access the body, but has performance overhead
+---
+# This mapping needs to exist, but is never actually followed.
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata: 
+  name: callback-mapping
+spec:
+  prefix: /callback
+  service: NoTaReAlSeRvIcE
+
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: ambassador
   annotations:
     getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v1
-      kind: Module
-      name: ambassador
-      config:
-        enable_grpc_web: true
-        default_label_domain: ambassador
-        default_labels:
-          ambassador:
-            defaults:
-            - x_limited_user:
-                header: "x-limited-user"
-                omit_if_not_present: true
-      ---
-      apiVersion: ambassador/v1
-      kind: Module
-      name: tls
-      config:
-        server:
-          enabled: True
-          redirect_cleartext_from: 8080
-          alpn_protocols: h2
       ---
       apiVersion: ambassador/v1
       kind: ConsulResolver

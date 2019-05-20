@@ -3,6 +3,7 @@ terraform.tfstate*
 secret-variables.tf
 
 /env.sh
+tls/
 
 # kubeapply
 *.o

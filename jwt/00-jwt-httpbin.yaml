@@ -1,18 +1,9 @@
 ---
-apiVersion: v1
-kind: Service
+apiVersion: getambassador.io/v1
+kind: Mapping
 metadata:
   name: jwt-httpbin
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v1
-      kind:  Mapping
-      name:  jwt_httpbin_mapping
-      prefix: /jwt-httpbin/
-      service: httpbin.org:80
-      host_rewrite: httpbin.org 
 spec:
-  ports:
-  - name: httpbin
-    port: 80
+  prefix: /jwt-httpbin/
+  service: httpbin.org:80
+  host_rewrite: httpbin.org 
