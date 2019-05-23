@@ -8,6 +8,7 @@ data:
     {
       "realm": "demo",
       "enabled": true,
+      "sslRequired": "none",
       "users": [
         {
           "username": "developer",
