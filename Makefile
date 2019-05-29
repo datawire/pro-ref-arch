@@ -29,7 +29,7 @@ apply-ambassador: ## Apply YAML for Ambassador Pro
 env.sh:
 	$(error 'env.sh' does not exist.  Copy 'env.sh.example' to 'env.sh' and edit it to include your Pro license key)
 
-apply-api-auth:
+apply-api-auth: $(KUBEAPPLY)
 	set -a && . ./env.sh && $(KUBEAPPLY) -f api-auth-with-github
 
 apply-consul-connect-integration: ## Apply YAML for integration between Consul and Ambassador Pro
@@ -41,7 +41,7 @@ apply-consul-connect: apply-helm env.sh
 	[ -n "$$(helm ls --all consul)" ] || helm install --wait --name=consul consul/consul -f ./consul-connect/values.yaml
 	set -a && . ./env.sh && $(KUBEAPPLY) -f consul-connect/qotm.yaml
 apply-helm: ## Apply YAML to ensure that Helm has appropriate permissions
-apply-helm: $(KUBECONFIG)
+apply-helm: $(KUBEAPPLY)
 	$(KUBEAPPLY) -f init/helm-rbac.yaml
 	helm init --wait --service-account=tiller
 
