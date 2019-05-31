@@ -1,17 +1,17 @@
 ---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: keycloak-demo-github-endpoint
+spec:
+  prefix: /auth
+  rewrite: ""
+  service: keycloak
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: keycloak
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v1
-      kind:  Mapping
-      name:  keycloak_demo_github_endpoint
-      prefix: /auth
-      rewrite: ""
-      service: keycloak
   labels:
     app: keycloak
 spec:
