@@ -1,29 +1,27 @@
 ---
-apiVersion: getambassador.io/v1
-kind: Mapping
-metadata:
-  name: qotm-limited
-spec:
-  prefix: /qotm/limited/
-  rewrite: /limited/
-  service: qotm
-  labels:
-    ambassador:
-      - request_label:
-        - qotm
----
-apiVersion: getambassador.io/v1
-kind: Mapping
-metadata:
-  name: qotm-open
-spec:
-  prefix: /qotm/open/
-  service: qotm
----
 apiVersion: v1
 kind: Service
 metadata:
   name: qotm
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind:  Mapping
+      name:  qotm_limited_mapping
+      prefix: /qotm/limited/
+      rewrite: /limited/
+      service: qotm
+      labels:
+        ambassador:
+          - request_label:
+            - qotm
+      ---
+      apiVersion: ambassador/v1
+      kind: Mapping
+      name: qotm_open_mapping
+      prefix: /qotm/open/
+      service: qotm
 spec:
   selector:
     app: qotm
@@ -49,7 +47,7 @@ spec:
     spec:
       containers:
       - name: qotm
-        image: datawire/qotm:1.4
+        image: datawire/qotm:1.7
         ports:
         - name: http-api
           containerPort: 5000
