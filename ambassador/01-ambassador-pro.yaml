@@ -19,6 +19,9 @@ rules:
 - apiGroups: ["getambassador.io"]
   resources: ["*"]
   verbs: ["get", "list", "watch"]
+- apiGroups: [ "apiextensions.k8s.io" ]
+  resources: [ "customresourcedefinitions" ]
+  verbs: ["get", "list", "watch"]
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -37,7 +40,6 @@ subjects:
 - kind: ServiceAccount
   name: ambassador
   namespace: default
-
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -55,6 +57,8 @@ spec:
     plural: authservices
     singular: authservice
     kind: AuthService
+    categories:
+    - ambassador-crds
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -72,6 +76,8 @@ spec:
     plural: mappings
     singular: mapping
     kind: Mapping
+    categories:
+    - ambassador-crds
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -89,6 +95,8 @@ spec:
     plural: modules
     singular: module
     kind: Module
+    categories:
+    - ambassador-crds
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -106,6 +114,8 @@ spec:
     plural: ratelimitservices
     singular: ratelimitservice
     kind: RateLimitService
+    categories:
+    - ambassador-crds
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -123,6 +133,8 @@ spec:
     plural: tcpmappings
     singular: tcpmapping
     kind: TCPMapping
+    categories:
+    - ambassador-crds
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -140,6 +152,8 @@ spec:
     plural: tlscontexts
     singular: tlscontext
     kind: TLSContext
+    categories:
+    - ambassador-crds
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -157,6 +171,8 @@ spec:
     plural: tracingservices
     singular: tracingservice
     kind: TracingService
+    categories:
+    - ambassador-crds
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -176,6 +192,8 @@ spec:
     kind: FilterPolicy
     shortNames:
     - fp
+    categories:
+    - ambassador-crds
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -195,6 +213,8 @@ spec:
     kind: Filter
     shortNames:
     - fil
+    categories:
+    - ambassador-crds
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -214,6 +234,8 @@ spec:
     kind: RateLimit
     shortNames:
     - rl
+    categories:
+    - ambassador-crds
 
 
 ######################################################################
