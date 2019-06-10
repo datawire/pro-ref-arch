@@ -18,6 +18,7 @@ This repository is broken into individual modules. A standard `Makefile` is prov
 * Ambassador (`make apply-ambassador`)
 * Consul Connect (`make apply-consul-connect`)
 * Consul Connect integration (`make apply-consul-connect-integration`)
+* Keycloak / GitHub SSO (`make apply-api-auth`)
 * JWT (`make apply-jwt`)
 * Monitoring (`make apply-monitoring`): Set up Prometheus and Grafana
 * Rate limiting (`make apply-ratelimit`)
@@ -29,6 +30,5 @@ This repository is broken into individual modules. A standard `Makefile` is prov
 Still to come:
 
    * `keycloak` integration with Keycloak IDP for authentication
-   * `apikey` API key configuration
    * `istio` Istio configuration
 
