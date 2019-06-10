@@ -11,7 +11,7 @@ rules:
   - namespaces
   - secrets
   - services
-  verbs: ["get", "list", "watch"]
+  verbs: ["get", "list", "watch", "create"]
 - apiGroups: [ "getambassador.io" ]
   resources: [ "*" ]
   verbs: ["get", "list", "watch"]
