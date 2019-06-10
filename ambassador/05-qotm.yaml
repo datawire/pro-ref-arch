@@ -1,3 +1,4 @@
+# @TEMPLATE@
 ---
 apiVersion: getambassador.io/v1
 kind: Mapping
@@ -49,7 +50,7 @@ spec:
     spec:
       containers:
       - name: qotm
-        image: datawire/qotm:1.7
+        image: datawire/qotm:{{env "QOTM_VERSION"}}
         ports:
         - name: http-api
           containerPort: 5000
