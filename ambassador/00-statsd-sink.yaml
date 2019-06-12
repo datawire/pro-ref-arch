@@ -1,10 +1,15 @@
 ---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monitoring
+---
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   creationTimestamp: null
   name: statsd-sink
-  namespace: default
+  namespace: monitoring
 spec:
   replicas: 1
   strategy: {}
@@ -28,7 +33,7 @@ metadata:
   labels:
     service: statsd-sink
   name: statsd-sink
-  namespace: default
+  namespace: monitoring
 spec:
   ports:
   - protocol: UDP
