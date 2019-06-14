@@ -1,0 +1,14 @@
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    app: prometheus-operator
+  name: ambassador-rules
+  namespace: monitoring
+spec:
+  groups:
+  - name: ambassador-rules
+    rules:
+    - expr: rate(envoy_http_ingress_http_downstream_rq_total[1m])
+      record: cluster_ingress:envoy_http_ingress_http_downstream_rq_total:rate1m

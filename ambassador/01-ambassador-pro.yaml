@@ -331,6 +331,8 @@ spec:
               fieldPath: metadata.namespace
         - name: STATSD_ENABLED
           value: "true"
+        - name: STATSD_HOST
+          value: "statsd-sink.monitoring.svc.cluster.local"
         ports:
         - name: http
           containerPort: 8080
