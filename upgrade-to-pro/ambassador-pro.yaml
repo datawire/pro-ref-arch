@@ -32,7 +32,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: ambassador-pro
-  namespace: kubeflow
+  namespace: default
 
 ######################################################################
 # Create a CRDs used to configure ambassador-pro
