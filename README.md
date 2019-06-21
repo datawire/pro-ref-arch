@@ -2,6 +2,8 @@
 
 This repository contains a core set of tested configurations for Ambassador Pro that integrates monitoring, distributed tracing, and more. 
 
+Information about open source code used in Ambassador Pro can be found in `/*.opensource.tar.gz` files in each Docker image.
+
 ## Quick start
 
 If you're new to Ambassador Pro, check out https://www.getambassador.io/user-guide/ambassador-pro-install for a quick start.
