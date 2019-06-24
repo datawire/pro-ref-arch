@@ -31,6 +31,5 @@ This repository is broken into individual modules. A standard `Makefile` is prov
 
 Still to come:
 
-   * `keycloak` integration with Keycloak IDP for authentication
    * `istio` Istio configuration
 
