@@ -27,7 +27,7 @@ resource "google_compute_http_health_check" "shopfront" {
 
 resource "google_compute_target_pool" "shopfront" {
   name          = "tf-shopfront-target-pool"
-  instances     = ["${google_compute_instance.vm_shopfront.*.self_link}"]
+  instances     = "${google_compute_instance.vm_shopfront.*.self_link}"
   health_checks = ["${google_compute_http_health_check.shopfront.name}"]
 }
 
@@ -49,7 +49,7 @@ resource "google_compute_http_health_check" "productcatalogue" {
 
 resource "google_compute_target_pool" "productcatalogue" {
   name          = "tf-productcatalogue-pool"
-  instances     = ["${google_compute_instance.vm_productcatalogue.*.self_link}"]
+  instances     = "${google_compute_instance.vm_productcatalogue.*.self_link}"
   health_checks = ["${google_compute_http_health_check.productcatalogue.name}"]
 }
 
@@ -71,7 +71,7 @@ resource "google_compute_http_health_check" "stockmanager" {
 
 resource "google_compute_target_pool" "stockmanager" {
   name          = "tf-stockmanager-target-pool"
-  instances     = ["${google_compute_instance.vm_stockmanager.*.self_link}"]
+  instances     = "${google_compute_instance.vm_stockmanager.*.self_link}"
   health_checks = ["${google_compute_http_health_check.stockmanager.name}"]
 }
 
