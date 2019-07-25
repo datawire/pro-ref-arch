@@ -2,6 +2,8 @@
 
 This repository contains a core set of tested configurations for Ambassador Pro that integrates monitoring, distributed tracing, and more. 
 
+Information about open source code used in Ambassador Pro can be found in `/*.opensource.tar.gz` files in each Docker image.
+
 ## Quick start
 
 If you're new to Ambassador Pro, check out https://www.getambassador.io/user-guide/ambassador-pro-install for a quick start.
@@ -18,6 +20,7 @@ This repository is broken into individual modules. A standard `Makefile` is prov
 * Ambassador (`make apply-ambassador`)
 * Consul Connect (`make apply-consul-connect`)
 * Consul Connect integration (`make apply-consul-connect-integration`)
+* Keycloak / GitHub SSO (`make apply-api-auth`)
 * JWT (`make apply-jwt`)
 * Monitoring (`make apply-monitoring`): Set up Prometheus and Grafana
 * Rate limiting (`make apply-ratelimit`)
@@ -28,7 +31,5 @@ This repository is broken into individual modules. A standard `Makefile` is prov
 
 Still to come:
 
-   * `keycloak` integration with Keycloak IDP for authentication
-   * `apikey` API key configuration
    * `istio` Istio configuration
 

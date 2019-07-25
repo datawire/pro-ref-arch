@@ -4,6 +4,7 @@ secret-variables.tf
 
 /env.sh
 tls/
+tmp/
 
 # kubeapply
 *.o

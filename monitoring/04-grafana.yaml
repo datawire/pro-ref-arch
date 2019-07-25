@@ -1,11 +1,19 @@
+# @TEMPLATE@
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: grafana
-  namespace: default
+  namespace: monitoring
+  annotations:
+    getambassador.io/config: |
+      ---
+      apiVersion: ambassador/v1
+      kind: Mapping
+      name: grafana-mapping
+      prefix: /grafana/
+      service: grafana.monitoring
 spec:
-  type: LoadBalancer
   ports:
     - port: 80
       targetPort: 3000
@@ -17,7 +25,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: grafana
-  namespace: default
+  namespace: monitoring
 spec:
   replicas: 1
   template:
@@ -42,6 +50,8 @@ spec:
             value: "true"
           - name: GF_AUTH_ANONYMOUS_ENABLED
             value: "false"
+          - name: GF_SERVER_ROOT_URL
+            value: {{ env "AMBASSADOR_URL" }}/grafana
         readinessProbe:
           httpGet:
             path: /login
@@ -49,6 +59,21 @@ spec:
         volumeMounts:
         - name: grafana-persistent-storage
           mountPath: /var
+        - name: grafana-datasources
+          mountPath: /etc/grafana/provisioning/datasources
+        - name: grafana-dashboards
+          mountPath: /etc/grafana/provisioning/dashboards
+        - name: grafana-dashboards-json
+          mountPath: /etc/grafana/provisioning/dashboards-json
       volumes:
       - name: grafana-persistent-storage
         emptyDir: {}
+      - name: grafana-datasources
+        configMap:
+          name: grafana-datasources
+      - name: grafana-dashboards
+        configMap:
+          name: grafana-dashboards
+      - name: grafana-dashboards-json
+        configMap:
+          name: grafana-dashboards-json

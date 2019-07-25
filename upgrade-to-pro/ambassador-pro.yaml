@@ -14,7 +14,7 @@ rules:
 - apiGroups: [""]
   resources:
   - secrets
-  verbs: ["get", "list", "watch"]
+  verbs: ["get", "list", "watch", "create"]
 ---
 apiVersion: v1
 kind: ServiceAccount
@@ -32,7 +32,7 @@ roleRef:
 subjects:
 - kind: ServiceAccount
   name: ambassador-pro
-  namespace: kubeflow
+  namespace: default
 
 ######################################################################
 # Create a CRDs used to configure ambassador-pro
