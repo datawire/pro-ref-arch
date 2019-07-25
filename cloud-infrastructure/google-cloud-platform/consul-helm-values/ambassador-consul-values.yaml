@@ -1,0 +1,34 @@
+# Sample Consul Helm Deployment for Ambassador API Gateway Integration
+
+global:
+  enabled: true
+  domain: consul
+  image: "consul:latest"
+  datacenter: dc1
+
+server:
+  enabled: true
+  replicas: 1
+  bootstrapExpect: 1
+  # enterpriseLicense:
+  #   secretName: "consul-license"
+  #   secretKey: "key"
+  storage: 20Gi
+  connect: true
+
+client:
+  enabled: true
+  grpc: true
+
+ui:
+  enabled: true
+  service:
+    enabled: true
+    type: "LoadBalancer"
+
+connectInject:
+  enabled: true
+  default: false
+
+syncCatalog:
+  enabled: true
