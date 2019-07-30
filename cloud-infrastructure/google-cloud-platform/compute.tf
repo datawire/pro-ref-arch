@@ -14,10 +14,12 @@ resource "google_compute_instance" "vm_shopfront" {
 
   network_interface {
     network       = "${google_compute_network.shop.name}"
-    access_config = {}
+    access_config {
+
+    }
   }
 
-  metadata {
+  metadata = {
     sshKeys = "${var.ssh_username}:${file("${var.public_key_path}")}"
   }
 
@@ -28,6 +30,7 @@ resource "google_compute_instance" "vm_shopfront" {
     connection {
       type        = "ssh"
       user        = "${var.ssh_username}"
+      host = "${self.network_interface.0.access_config.0.nat_ip}"
       private_key = "${file("${var.private_key_path}")}"
       agent       = false
     }
@@ -37,6 +40,7 @@ resource "google_compute_instance" "vm_shopfront" {
     connection {
       type        = "ssh"
       user        = "${var.ssh_username}"
+      host = "${self.network_interface.0.access_config.0.nat_ip}"
       private_key = "${file("${var.private_key_path}")}"
       agent       = false
     }
@@ -71,10 +75,12 @@ resource "google_compute_instance" "vm_productcatalogue" {
 
   network_interface {
     network       = "${google_compute_network.shop.name}"
-    access_config = {}
+    access_config {
+
+    }
   }
 
-  metadata {
+  metadata = {
     sshKeys = "${var.ssh_username}:${file("${var.public_key_path}")}"
   }
 
@@ -85,6 +91,7 @@ resource "google_compute_instance" "vm_productcatalogue" {
     connection {
       type        = "ssh"
       user        = "${var.ssh_username}"
+      host = "${self.network_interface.0.access_config.0.nat_ip}"
       private_key = "${file("${var.private_key_path}")}"
       agent       = false
     }
@@ -94,6 +101,7 @@ resource "google_compute_instance" "vm_productcatalogue" {
     connection {
       type        = "ssh"
       user        = "${var.ssh_username}"
+      host = "${self.network_interface.0.access_config.0.nat_ip}"
       private_key = "${file("${var.private_key_path}")}"
       agent       = false
     }
@@ -125,10 +133,12 @@ resource "google_compute_instance" "vm_stockmanager" {
 
   network_interface {
     network       = "${google_compute_network.shop.name}"
-    access_config = {}
+    access_config {
+
+    }
   }
 
-  metadata {
+  metadata = {
     sshKeys = "${var.ssh_username}:${file("${var.public_key_path}")}"
   }
 
@@ -139,6 +149,7 @@ resource "google_compute_instance" "vm_stockmanager" {
     connection {
       type        = "ssh"
       user        = "${var.ssh_username}"
+      host = "${self.network_interface.0.access_config.0.nat_ip}"
       private_key = "${file("${var.private_key_path}")}"
       agent       = false
     }
@@ -148,6 +159,7 @@ resource "google_compute_instance" "vm_stockmanager" {
     connection {
       type        = "ssh"
       user        = "${var.ssh_username}"
+      host = "${self.network_interface.0.access_config.0.nat_ip}"
       private_key = "${file("${var.private_key_path}")}"
       agent       = false
     }
