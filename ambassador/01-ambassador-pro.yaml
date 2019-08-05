@@ -295,7 +295,7 @@ spec:
     - ambassador-crds
 
 ######################################################################
-# Redis for Ambassador Pro ratelimit
+# Redis for Ambassador Pro
 ---
 apiVersion: v1
 kind: Service
@@ -411,12 +411,8 @@ spec:
       - name: ambassador-pro
         image: quay.io/datawire/ambassador_pro:amb-sidecar-{{env "AMBASSADOR_PRO_VERSION"}}
         ports:
-        - name: grpc-auth
+        - name: http
           containerPort: 8500
-        - name: grpc-ratelimit
-          containerPort: 8501
-        - name: http-debug
-          containerPort: 8502
         env:
         - name: REDIS_SOCKET_TYPE 
           value: tcp
