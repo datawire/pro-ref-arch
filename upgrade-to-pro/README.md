@@ -4,7 +4,7 @@ Ambassador Pro is typically deployed as a sidecar service to Ambassador. This al
 
 While this is the preferred deployment topology, Ambassador Pro can also be deployed as a separate service. Ambassador will then communicate with it via a Kubernetes service. This allows for an easy deployment for open source users to evaluate Ambassador Pr.
 
-The `ambassador-pro.yaml` file in this directory contains all of the necessary resources to easily upgrade Ambassador open source to Ambassador Pro.
+The `??-ambassador-pro*.yaml` files in this directory contains all of the necessary resources to easily upgrade Ambassador open source to Ambassador Pro.
 
 ## Considerations
 
