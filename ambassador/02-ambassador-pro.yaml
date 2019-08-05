@@ -29,7 +29,8 @@ spec:
   service: NoTaReAlSeRvIcE
 
 ######################################################################
-# Create the 'ambassador' and 'ambassador-admin' Services.
+# Create the 'ambassador', 'ambassador-admin', and 'ambassador-pro'
+# Services.
 ---
 apiVersion: v1
 kind: Service
@@ -70,10 +71,25 @@ spec:
     targetPort: 8877
   selector:
     service: ambassador
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: ambassador-pro
+  name: ambassador-pro
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    service: ambassador
 
 ######################################################################
-# Create the Deployment backing the 'ambassador' and
-# 'ambassador-admin', Services.
+# Create the Deployment backing the 'ambassador', 'ambassador-admin',
+# and 'ambassador-pro' Services.
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
