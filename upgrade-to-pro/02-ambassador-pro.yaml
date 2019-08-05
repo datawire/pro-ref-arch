@@ -1,5 +1,35 @@
 # @TEMPLATE@
 
+######################################################################
+# Configure Ambassador OSS to use Ambassador Pro.
+---
+apiVersion: getambassador.io/v1
+kind: RateLimitService
+metadata:
+  name: ambassador-pro-ratelimit
+spec:
+  service: ambassador-pro:80
+---
+apiVersion: getambassador.io/v1
+kind: AuthService
+metadata:
+  name: ambassador-pro-auth
+spec:
+  proto: grpc
+  auth_service: ambassador-pro:80
+  allow_request_body: false # setting this to 'true' allows Plugin and External filters to access the body, but has performance overhead
+---
+# This mapping needs to exist, but is never actually followed.
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: callback_mapping
+spec:
+  prefix: /callback
+  service: NoTaReAlSeRvIcE
+
+######################################################################
+# Create the 'ambassador-pro' Service.
 ---
 apiVersion: v1
 kind: Service
@@ -7,27 +37,6 @@ metadata:
   labels:
     service: ambassador-pro
   name: ambassador-pro
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v1
-      kind: AuthService
-      name: ambassador-pro-auth
-      proto: grpc
-      auth_service: ambassador-pro:80
-      allow_request_body: false # setting this to 'true' allows Plugin and External filters to access the body, but has performance overhead
-      ---
-      # This mapping needs to exist, but is never actually followed.
-      apiVersion: ambassador/v1
-      kind: Mapping
-      name: callback_mapping
-      prefix: /callback
-      service: NoTaReAlSeRvIcE
-      ---
-      apiVersion: ambassador/v1
-      kind: RateLimitService
-      name: ambassador-pro-ratelimit
-      service: ambassador-pro:80
 spec:
   type: ClusterIP
   ports:
@@ -36,6 +45,9 @@ spec:
     targetPort: http
   selector:
     service: ambassador-pro
+
+######################################################################
+# Create the Deployment backing the 'ambassador-pro' Service.
 ---
 apiVersion: extensions/v1beta1
 kind: Deployment
