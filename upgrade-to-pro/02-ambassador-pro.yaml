@@ -1,0 +1,82 @@
+# @TEMPLATE@
+
+######################################################################
+# Configure Ambassador OSS to use Ambassador Pro.
+---
+apiVersion: getambassador.io/v1
+kind: RateLimitService
+metadata:
+  name: ambassador-pro-ratelimit
+spec:
+  service: ambassador-pro:80
+---
+apiVersion: getambassador.io/v1
+kind: AuthService
+metadata:
+  name: ambassador-pro-auth
+spec:
+  proto: grpc
+  auth_service: ambassador-pro:80
+  allow_request_body: false # setting this to 'true' allows Plugin and External filters to access the body, but has performance overhead
+---
+# This mapping needs to exist, but is never actually followed.
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: callback_mapping
+spec:
+  prefix: /callback
+  service: NoTaReAlSeRvIcE
+
+######################################################################
+# Create the 'ambassador-pro' Service.
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    service: ambassador-pro
+  name: ambassador-pro
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    targetPort: http
+  selector:
+    service: ambassador-pro
+
+######################################################################
+# Create the Deployment backing the 'ambassador-pro' Service.
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: ambassador-pro
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      service: ambassador-pro
+  template:
+    metadata:
+      labels:
+        service: ambassador-pro
+    spec:
+      serviceAccountName: ambassador-pro
+      terminationGracePeriodSeconds: 0
+      containers:
+      - name: ambassador-pro
+        image: quay.io/datawire/ambassador_pro:amb-sidecar-{{env "AMBASSADOR_PRO_VERSION"}}
+        ports:
+        - name: http
+          containerPort: 8500
+        env:
+        - name: APP_LOG_LEVEL
+          value: "debug"
+        - name: REDIS_URL 
+          value: ambassador-pro-redis:6379
+        - name: REDIS_SOCKET_TYPE
+          value: tcp
+        - name: AMBASSADOR_LICENSE_KEY 
+          value: {{env "AMBASSADOR_LICENSE_KEY"}}
