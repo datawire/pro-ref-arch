@@ -16,7 +16,7 @@ _kubeapply.mk := $(lastword $(MAKEFILE_LIST))
 include $(dir $(lastword $(MAKEFILE_LIST)))prelude.mk
 
 KUBEAPPLY ?= $(dir $(_kubeapply.mk))kubeapply
-KUBEAPPLY_VERSION = 0.3.11
+KUBEAPPLY_VERSION = 0.7.2
 
 $(KUBEAPPLY): $(_kubeapply.mk)
 	curl -o $@ --fail https://s3.amazonaws.com/datawire-static-files/kubeapply/$(KUBEAPPLY_VERSION)/$(GOHOSTOS)/$(GOHOSTARCH)/kubeapply

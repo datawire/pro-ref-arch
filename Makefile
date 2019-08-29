@@ -19,10 +19,19 @@ define help.body
 endef
 
 apply-%: $(KUBEAPPLY) $(KUBECONFIG) %/ env.sh
-	set -a && . ./env.sh && $(KUBEAPPLY) -f $*
-.PHONY: apply-%
+	set -a && . ./env.sh && $(KUBEAPPLY) -f $* --timeout=5m
+.PHONY: apply-% create-license-key-secret
 
-apply-ambassador: ## Apply YAML for Ambassador Pro
+create-license-key-secret:
+	-set -a && . ./env.sh &&\
+	kubectl create secret generic ambassador-pro-license-key --from-literal=key=$(AMBASSADOR_LICENSE_KEY)\
+	||\
+	kubectl delete secret ambassador-pro-license-key &&\
+	kubectl create secret generic ambassador-pro-license-key --from-literal=key=$(AMBASSADOR_LICENSE_KEY)
+
+## Apply YAML for Ambassador Pro
+apply-ambassador: create-license-key-secret\
+	apply-%
 
 # TODO: cloud-infrastructure
 
