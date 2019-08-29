@@ -24,10 +24,10 @@ apply-%: $(KUBEAPPLY) $(KUBECONFIG) %/ env.sh
 
 create-license-key-secret:
 	-set -a && . ./env.sh &&\
-	kubectl create secret generic ambassador-pro-license-key --from-literal=key=$(AMBASSADOR_LICENSE_KEY)\
+	kubectl create secret generic ambassador-pro-license-key --from-literal=key=$${AMBASSADOR_LICENSE_KEY}\
 	||\
 	kubectl delete secret ambassador-pro-license-key &&\
-	kubectl create secret generic ambassador-pro-license-key --from-literal=key=$(AMBASSADOR_LICENSE_KEY)
+	kubectl create secret generic ambassador-pro-license-key --from-literal=key=$${AMBASSADOR_LICENSE_KEY}
 
 ## Apply YAML for Ambassador Pro
 apply-ambassador: create-license-key-secret\
