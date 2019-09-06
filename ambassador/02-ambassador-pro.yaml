@@ -19,10 +19,37 @@ spec:
   auth_service: "127.0.0.1:8500"
   allow_request_body: false # setting this to 'true' allows Plugin and External filters to access the body, but has performance overhead
 ---
+# DevPortal
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: ambassador-pro-devportal
+spec:
+  prefix: /docs
+  service: "127.0.0.1:8500"
+---
+apiVersion: getambassador.io/v1beta2
+kind: FilterPolicy
+metadata:
+  name: ambassador-pro-internal-access-control
+spec:
+  rules:
+    - host: "*"
+      path: "*/.ambassador-internal/*"
+      filters:
+        - name: ambassador-pro-internal-access-control
+---
+apiVersion: getambassador.io/v1beta2
+kind: Filter
+metadata:
+  name: ambassador-pro-internal-access-control
+spec:
+  Internal: {}
+---
 # This mapping needs to exist, but is never actually followed.
 apiVersion: getambassador.io/v1
 kind: Mapping
-metadata: 
+metadata:
   name: callback-mapping
 spec:
   prefix: /callback
@@ -178,6 +205,17 @@ spec:
             secretKeyRef:
               name: ambassador-pro-license-key
               key: key
+        # DevPortal settings
+        # Set this to the address that Ambassador is externally-reachable from
+        - name: PUBLIC_API_URL
+          value: "https://ambassador.standalone.svc.cluster.local"
+        # To customize content and look&feel fork this repo and point to it
+        - name: APRO_DEVPORTAL_CONTENT_URL
+          value: "https://github.com/datawire/devportal-content"
+        # Change this if you want different poll rate for getting OpenAPI docs:
+        - name: POLL_EVERY_SECS
+          value: "60"
+
       restartPolicy: Always
       securityContext:
         runAsUser: 8888
