@@ -208,10 +208,10 @@ spec:
         # DevPortal settings
         # Set this to the address that Ambassador is externally-reachable from
         - name: AMBASSADOR_URL
-          value: "https://ambassador.standalone.svc.cluster.local"
+          value: {{env "AMBASSADOR_URL"}}
         # To customize content and look&feel fork this repo and point to it
         - name: APRO_DEVPORTAL_CONTENT_URL
-          value: "https://github.com/datawire/devportal-content"
+          value: {{env "APRO_DEVPORTAL_CONTENT_URL"}}
         # Change this if you want different poll rate for getting OpenAPI docs:
         - name: POLL_EVERY_SECS
           value: "60"
