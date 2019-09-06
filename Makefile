@@ -18,7 +18,7 @@ define help.body
 # distributed tracing, and more.
 endef
 
-apply-%: $(KUBEAPPLY) $(KUBECONFIG) %/ env.sh
+apply-%: .env.sh.ok $(KUBEAPPLY) $(KUBECONFIG) %/
 	set -a && . ./env.sh && $(KUBEAPPLY) -f $* --timeout=5m
 .PHONY: apply-% create-license-key-secret
 
@@ -36,7 +36,7 @@ apply-ambassador: create-license-key-secret\
 # TODO: cloud-infrastructure
 
 env.sh:
-	$(error 'env.sh' does not exist.  Copy 'env.sh.example' to 'env.sh' and edit it to include your Pro license key)
+	$(error 'env.sh' does not exist.  Copy 'env.sh.example' to 'env.sh' and edit it to include your Pro license key and configure devportal )
 
 apply-api-auth:
 	set -a && . ./env.sh && $(KUBEAPPLY) -f api-auth-with-github
@@ -68,3 +68,15 @@ apply-upgrade-to-pro:
 
 clean:
 	rm -f */*.o
+
+.env.sh.ok: env.sh env.sh.example Makefile
+	@env -i PIPESTATUS=1 sh -c "set" | cut -d= -f1 > .env.sh.empty
+	@env -i sh -c ". env.sh.example; set" | cut -d= -f1 | join -v2 .env.sh.empty - > .env.sh.example
+	@env -i sh -c ". env.sh; set" | cut -d= -f1 | join -v2 .env.sh.empty - > .env.sh
+	@join -v2 .env.sh .env.sh.example | sed -e's/^/	- /' > .env.sh.missing
+	@if test "$$(cat .env.sh.missing)" != ""; then \
+		echo "Please consult env.sh.example and upgrade your env.sh as it's missing some settings:"; \
+		cat .env.sh.missing; \
+		false; \
+	fi
+	@touch .env.sh.ok
