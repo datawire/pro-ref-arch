@@ -207,7 +207,7 @@ spec:
               key: key
         # DevPortal settings
         # Set this to the address that Ambassador is externally-reachable from
-        - name: PUBLIC_API_URL
+        - name: AMBASSADOR_URL
           value: "https://ambassador.standalone.svc.cluster.local"
         # To customize content and look&feel fork this repo and point to it
         - name: APRO_DEVPORTAL_CONTENT_URL

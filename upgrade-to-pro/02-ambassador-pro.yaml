@@ -109,13 +109,13 @@ spec:
           value: {{env "AMBASSADOR_LICENSE_KEY"}}
         # DevPortal settings
         # Set this to the address that Ambassador is externally-reachable from
-        - name: PUBLIC_API_URL
-          value: "https://ambassador.default.svc.cluster.local"
-        # Set this to the address that Ambassador is internally reachable from
         - name: AMBASSADOR_URL
           value: "https://ambassador.default.svc.cluster.local"
+        # Set this to the address that Ambassador is internally reachable from
+        - name: AMBASSADOR_INTERNAL_URL
+          value: "https://ambassador.default.svc.cluster.local"
         # Set this to the address that Ambassador admin is internally reachable from
-        - name: DIAGD_URL
+        - name: AMBASSADOR_ADMIN_URL
           value: "http://ambassador-admin.default.svc.cluster.local:8877"
         # To customize content and look&feel fork this repo and point to it
         - name: APRO_DEVPORTAL_CONTENT_URL
