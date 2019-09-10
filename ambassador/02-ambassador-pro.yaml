@@ -25,7 +25,17 @@ kind: Mapping
 metadata:
   name: ambassador-pro-devportal
 spec:
-  prefix: /docs
+  prefix: /docs/
+  rewrite: ""
+  service: "127.0.0.1:8500"
+---
+apiVersion: getambassador.io/v1
+kind: Mapping
+metadata:
+  name: ambassador-pro-devportal-api
+spec:
+  prefix: /openapi/
+  rewrite: ""
   service: "127.0.0.1:8500"
 ---
 apiVersion: getambassador.io/v1beta2
