@@ -79,4 +79,8 @@ clean:
 		cat .env.sh.missing; \
 		false; \
 	fi
+	@. env.sh; if [ "$${AMBASSADOR_URL}" == "$${AMBASSADOR_URL#[hH][tT][tT][pP][sS]://}" ]; then \
+	  echo "$$(grep -n AMBASSADOR_URL env.sh /dev/null|cut -d: -f-2):error:  AMBASSADOR_URL has to be an absolute https URL."; \
+	  false; \
+	fi
 	@touch .env.sh.ok
