@@ -12,3 +12,5 @@ tmp/
 node_modules/
 
 .idea
+
+.env.sh*
