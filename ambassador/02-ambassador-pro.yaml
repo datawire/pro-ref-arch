@@ -19,6 +19,15 @@ spec:
   auth_service: "127.0.0.1:8500"
   allow_request_body: false # setting this to 'true' allows Plugin and External filters to access the body, but has performance overhead
 ---
+apiVersion: ambassador/v1
+kind: Mapping
+metadata:
+  name: ambassador-pro
+spec:
+  prefix: /.ambassador/
+  rewrite: ""
+  service: "127.0.0.1:8500"
+---
 # DevPortal
 apiVersion: getambassador.io/v1
 kind: Mapping
