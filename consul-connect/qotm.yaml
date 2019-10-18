@@ -20,7 +20,7 @@ spec:
   - name: http
     port: 80
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: qotm-consul
@@ -28,6 +28,9 @@ spec:
   replicas: 1
   strategy:
     type: RollingUpdate
+  selector:
+    matchLabels:
+      app: qotm-consul
   template:
     metadata:
       labels:

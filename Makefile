@@ -18,7 +18,7 @@ define help.body
 # distributed tracing, and more.
 endef
 
-apply-%: .env.sh.ok $(KUBEAPPLY) $(KUBECONFIG) %/
+apply-%: $(KUBEAPPLY) $(KUBECONFIG) %/
 	set -a && . ./env.sh && $(KUBEAPPLY) -f $* --timeout=5m
 .PHONY: apply-% create-license-key-secret
 

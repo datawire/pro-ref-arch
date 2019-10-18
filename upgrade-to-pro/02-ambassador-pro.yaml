@@ -96,7 +96,7 @@ spec:
 ######################################################################
 # Create the Deployment backing the 'ambassador-pro' Service.
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: ambassador-pro
