@@ -47,12 +47,15 @@ spec:
   selector:
     service: grpc-echo
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: grpc-echo
 spec:
   replicas: 1
+  selector:
+    matchLabels:
+      service: grpc-echo
   template:
     metadata:
       labels:
