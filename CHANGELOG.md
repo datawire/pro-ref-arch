@@ -1,5 +1,16 @@
 ## Ambassador Pro CHANGELOG
 
+## 0.9.1 (2019-10-22)
+
+Configuration
+
+ * The `JWT` and `OAuth2` Filter types support `renegotiateTLS`
+ * The `JWT` Filter now has an `errorResponse` argument that allows templating the filter's error response.
+
+Other:
+
+ * Update Ambassador Core from Ambassador 0.83.0 to 0.85.0
+
 ## 0.9.0 (2019-10-08)
 
 Configuration
@@ -20,6 +31,7 @@ Other:
 
  * Update Ambassador Core from Ambassador 0.75.0 to 0.83.0
  * Incorporate the Envoy 1.11.2 security patches in Ambassador Core
+ * Fast iteration on Developer Portal styling and content using a docker image inside a local checkout of Developer Portal content repo (see reference doc for usage guide)
 
 ## 0.8.0 (2019-09-16)
 
