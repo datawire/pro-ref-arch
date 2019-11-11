@@ -1,5 +1,19 @@
 ## Ambassador Pro CHANGELOG
 
+## 0.10.0 (2019-11-11)
+
+Configuration
+
+ * Feature: `FilterPolicy` may now set `ifRequestHeader` to only apply a `Filter` to requests with appropriate headers.
+ * Feature: `FilterPolicy` may now set `onDeny` and `onAllow` to modify how `Filter`s chain together.
+ * Feature: `JWT` Filter `injectRequestHeaderse` templates can now read the incoming HTTP request headers.
+ * Feature: `JWT` Filter `errorResponse` can now set HTTP headers of the error response.
+ * Beta feature: `OAuth2` Filter can now be configured to receive OAuth client credentials in the HTTP request header, and use them to obtain a client credentials grant.  This is only currently tested with Okta.
+
+Behavior:
+
+ * The `OAuth2` filter's XSRF protection now works differently.  You should use the `ambassador_xsrf.{name}.{namespace}` cookie instead of the `ambassador_session.{name}.{namespace}` cookie for XSRF-protection purposes.
+
 ## 0.9.1 (2019-10-22)
 
 Configuration
