@@ -4,7 +4,7 @@ Ambassador Pro includes a dynamic rate limiting service that can handle a wide v
 
 ## Prerequesites
 
-1. [Install Ambassador Edge Stack](https://www.getambassador.io/early-access/user-guide/getting-started/)
+1. [Install Ambassador Edge Stack](https://www.getambassador.io/user-guide/getting-started/)
 
 2. Install the qotm service to test basic rate limiting
 

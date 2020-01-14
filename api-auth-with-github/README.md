@@ -2,7 +2,7 @@
 
 This will enable API authentication using GitHub login credentials. It uses [Keycloak](https://www.keycloak.org/) to act as an OpenID Connect authentication server.
 
-1. [Install Ambassador Pro](https://www.getambassador.io/user-guide/install).
+1. [Install Ambassador Edge Stack](https://www.getambassador.io/user-guide/install).
 2. Register a domain name or get the `External-IP` for your Ambassador service `kubectl get svc ambassador`
 3. Create an OAuth application in GitHub.
    * Click on your Profile photo, then choose Settings.
