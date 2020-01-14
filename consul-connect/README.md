@@ -2,6 +2,12 @@
 
 Ambassador integrates with Consul for service discovery and end-to-end TLS in your data center. This guide will quickly get Consul and a demo QoTM application installed with the Connect sidecar proxy enabled for mTLS between Ambassador and the QoTM service.
 
+## Prerequesites
+
+- [Helm 3](https://helm.sh/docs/)
+
+   If you are using Helm 2, you can manually deploy consul following [Consul's documentation](https://www.consul.io/docs/platform/k8s/run.html#prerequisites)
+
 ## 1. Deploy Ambassador if you have not yet.
 
 https://www.getambassador.io/user-guide/install
