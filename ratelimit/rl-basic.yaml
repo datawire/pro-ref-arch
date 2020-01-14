@@ -5,9 +5,9 @@ metadata:
 spec:
   domain: ambassador
   limits:
-   - pattern: [{x_limited_user: "false"}, {generic_key: "qotm"}]
+   - pattern: [{generic_key: "qotm"}]
      rate: 5
      unit: minute
-   - pattern: [{x_limited_user: "true"}, {generic_key: "qotm"}]
+   - pattern: [{generic_key: "qotm"}]
      rate: 5
      unit: minute

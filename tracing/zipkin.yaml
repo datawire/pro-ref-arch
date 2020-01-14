@@ -1,5 +1,5 @@
 ---
-apiVersion: getambassador.io/v1
+apiVersion: getambassador.io/v2
 kind: TracingService
 metadata:
   name: tracing
@@ -7,7 +7,7 @@ spec:
   service: zipkin:9411
   driver: zipkin
 ---
-apiVersion: getambassador.io/v1
+apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
   name: zipkin

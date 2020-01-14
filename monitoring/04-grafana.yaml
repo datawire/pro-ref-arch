@@ -1,18 +1,19 @@
 # @TEMPLATE@
 ---
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: grafana-mapping
+  namespace: monitoring
+spec:
+  prefix: /grafana/
+  service: grafana.monitoring
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: grafana
   namespace: monitoring
-  annotations:
-    getambassador.io/config: |
-      ---
-      apiVersion: ambassador/v1
-      kind: Mapping
-      name: grafana-mapping
-      prefix: /grafana/
-      service: grafana.monitoring
 spec:
   ports:
     - port: 80

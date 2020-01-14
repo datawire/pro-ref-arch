@@ -1,0 +1,13 @@
+---
+apiVersion: getambassador.io/v2
+kind: Mapping
+metadata:
+  name: quote-backend
+  namespace: ambassador
+spec:
+  prefix: /backend/
+  service: quote
+  labels:
+    ambassador:
+      - remote_address_label_group:
+        - remote_address

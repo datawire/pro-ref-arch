@@ -1,22 +1,4 @@
 ---
-apiVersion: v1
-kind: Service
-metadata:
-  name: ambassador-monitor
-  namespace: monitoring
-  labels:
-    service: ambassador-monitor
-spec:
-  selector:
-    service: statsd-sink
-  type: ClusterIP
-  clusterIP: None
-  ports:
-  - name: prometheus-metrics
-    port: 9102
-    targetPort: 9102
-    protocol: TCP
----
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
@@ -25,8 +7,12 @@ metadata:
   labels:
     ambassador: monitoring
 spec:
+  namespaceSelector:
+    matchNames:
+    - ambassador
   selector:
     matchLabels:
-      service: ambassador-monitor
+      service: ambassador-admin
   endpoints:
-  - port: prometheus-metrics
+  - port: ambassador-admin
+    path: /metrics

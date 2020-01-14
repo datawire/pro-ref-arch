@@ -28,7 +28,15 @@ subjects:
     name: ambassador-consul-connect
     namespace: default
 ---
-apiVersion: getambassador.io/v1
+apiVersion: getambassador.io/v2
+kind: ConsulResolver
+metadata:
+  name: consul-dc1
+spec:
+  address: consul-consul-server.default.svc.cluster.local:8500
+  datacenter: dc1
+---
+apiVersion: getambassador.io/v2
 kind: TLSContext
 metadata:
   name: ambassador-consul
@@ -74,7 +82,7 @@ spec:
       terminationGracePeriodSeconds: 0
       containers:
         - name: consul-connect-integration
-          image: quay.io/datawire/ambassador_pro:consul_connect_integration-{{env "AMBASSADOR_PRO_VERSION"}}
+          image: quay.io/datawire/ambassador_pro:consul_connect_integration-0.11.0
           imagePullPolicy: Always
           resources:
             limits:

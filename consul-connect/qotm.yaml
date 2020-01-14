@@ -1,11 +1,11 @@
 ---
-apiVersion: getambassador.io/v1
+apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
   name: qotm-consul
 spec:
   prefix: /qotm-consul/
-  service: qotm-proxy
+  service: qotm-sidecar-proxy
   resolver: consul-dc1
   tls: ambassador-consul
   load_balancer:

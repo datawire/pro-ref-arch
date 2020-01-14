@@ -4,9 +4,7 @@ Ambassador integrates with Consul for service discovery and end-to-end TLS in yo
 
 ## 1. Deploy Ambassador if you have not yet.
 
-```
-make apply-ambassador
-```
+https://www.getambassador.io/user-guide/install
 
 ## 2. Deploy Consul, the Connect integration, and the QoTM demo application
 
@@ -18,6 +16,12 @@ make apply-consul-connect-integration
 - Deploys the QoTM application with the Connect sidecar proxy injected to enable mTLS between itself and Ambassador.
 - Deploys the `ambassador-consul-connect-integration` to expose Consul Connect's TLS certificates to Ambassador.
 - Registers a `Mapping` in Ambassador which will use Consul service discovery to route to the endpoint of the `qotm-proxy` service. 
+
+If you already have Consul deployed, just deploy the Consul connector by running:
+
+```
+make apply-consul-connector
+```
 
 ## 3. Send a request to the QoTM application via the Connect sidecar proxy
 

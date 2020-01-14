@@ -112,387 +112,76 @@ data:
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 24,
-            "x": 0,
-            "y": 0
-          },
-          "id": 13,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "cluster_ingress:envoy_http_ingress_http_downstream_rq_total:rate1m",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "Requests",
-              "refId": "A"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Total Requests",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": "Requests per Second",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "Prometheus",
-          "description": "95th, 90th, and 50th percentile of total requests per second through Ambassador",
-          "fill": 1,
-          "gridPos": {
-            "h": 9,
-            "w": 20,
-            "x": 0,
-            "y": 9
-          },
-          "id": 11,
-          "legend": {
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "show": true,
-            "total": false,
-            "values": false
-          },
-          "lines": true,
-          "linewidth": 1,
-          "links": [],
-          "nullPointMode": "null",
-          "percentage": false,
-          "pointradius": 5,
-          "points": false,
-          "renderer": "flot",
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": false,
-          "steppedLine": false,
-          "targets": [
-            {
-              "expr": "quantile_over_time(0.95, cluster_ingress:envoy_http_ingress_http_downstream_rq_total:rate1m[1h])",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "95th Percentile",
-              "refId": "A"
-            },
-            {
-              "expr": "quantile_over_time(0.9, cluster_ingress:envoy_http_ingress_http_downstream_rq_total:rate1m[1h])",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "90th Percentile",
-              "refId": "B"
-            },
-            {
-              "expr": "quantile_over_time(0.5, cluster_ingress:envoy_http_ingress_http_downstream_rq_total:rate1m[1h])",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "legendFormat": "50th Percentile",
-              "refId": "C"
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeShift": null,
-          "title": "Peak RPS Percentiles",
-          "tooltip": {
-            "shared": true,
-            "sort": 0,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "format": "short",
-              "label": "Requests per Second",
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ]
-        },
-        {
-          "cacheTimeout": null,
-          "colorBackground": false,
-          "colorValue": false,
-          "colors": [
-            "#299c46",
-            "rgba(237, 129, 40, 0.89)",
-            "#d44a3a"
-          ],
-          "datasource": "Prometheus",
-          "description": "",
-          "format": "none",
-          "gauge": {
-            "maxValue": 100,
-            "minValue": 0,
-            "show": false,
-            "thresholdLabels": false,
-            "thresholdMarkers": true
-          },
-          "gridPos": {
-            "h": 9,
-            "w": 4,
-            "x": 20,
-            "y": 9
-          },
-          "id": 15,
-          "interval": null,
-          "links": [],
-          "mappingType": 1,
-          "mappingTypes": [
-            {
-              "name": "value to text",
-              "value": 1
-            },
-            {
-              "name": "range to text",
-              "value": 2
-            }
-          ],
-          "maxDataPoints": 100,
-          "nullPointMode": "connected",
-          "nullText": null,
-          "postfix": "",
-          "postfixFontSize": "50%",
-          "prefix": "",
-          "prefixFontSize": "50%",
-          "rangeMaps": [
-            {
-              "from": "null",
-              "text": "N/A",
-              "to": "null"
-            }
-          ],
-          "sparkline": {
-            "fillColor": "rgba(31, 118, 189, 0.18)",
-            "full": false,
-            "lineColor": "rgb(31, 120, 193)",
-            "show": false
-          },
-          "tableColumn": "",
-          "targets": [
-            {
-              "expr": "quantile_over_time(0.95, cluster_ingress:envoy_http_ingress_http_downstream_rq_total:rate1m[1h])",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "refId": "A"
-            }
-          ],
-          "thresholds": "",
-          "title": "Peak 95% Requests per Second",
-          "type": "singlestat",
-          "valueFontSize": "80%",
-          "valueMaps": [
-            {
-              "op": "=",
-              "text": "N/A",
-              "value": "null"
-            }
-          ],
-          "valueName": "max"
-        },
-        {
-          "collapsed": false,
-          "gridPos": {
-            "h": 1,
-            "w": 24,
-            "x": 0,
-            "y": 18
-          },
-          "id": 9,
-          "panels": [],
-          "repeat": null,
-          "title": "Listener",
-          "type": "row"
-        },
-        {
-          "aliasColors": {},
-          "bars": false,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "Prometheus",
           "fill": 1,
           "gridPos": {
             "h": 8,
             "w": 24,
             "x": 0,
-            "y": 19
+            "y": 1
           },
-          "hideTimeOverride": false,
-          "id": 2,
+          "id": 30,
           "legend": {
-            "alignAsTable": true,
-            "avg": true,
+            "avg": false,
             "current": false,
-            "hideEmpty": false,
-            "hideZero": false,
-            "max": true,
-            "min": true,
-            "rightSide": false,
+            "max": false,
+            "min": false,
             "show": true,
-            "total": true,
-            "values": true
+            "total": false,
+            "values": false
           },
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "nullPointMode": "null as zero",
+          "nullPointMode": "null",
+          "options": {},
           "percentage": false,
-          "pointradius": 5,
+          "pointradius": 2,
           "points": false,
           "renderer": "flot",
-          "seriesOverrides": [
-            {
-              "alias": "2xx",
-              "color": "#508642"
-            },
-            {
-              "alias": "3xx",
-              "color": "#0a437c"
-            },
-            {
-              "alias": "4xx",
-              "color": "#e5ac0e"
-            },
-            {
-              "alias": "5xx",
-              "color": "#bf1b00"
-            }
-          ],
+          "seriesOverrides": [],
           "spaceLength": 10,
           "stack": false,
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(increase(envoy_listener_0_0_0_0_${listener_port}_http_ingress_http_downstream_rq_2xx[1m]))",
+              "expr": "sum(increase(envoy_http_downstream_rq_xx{envoy_response_code_class=\"2\"}[1m]))",
               "format": "time_series",
-              "instant": false,
-              "interval": "",
-              "intervalFactor": 2,
+              "intervalFactor": 1,
               "legendFormat": "2xx",
-              "refId": "E"
-            },
-            {
-              "expr": "sum(increase(envoy_listener_0_0_0_0_${listener_port}_http_ingress_http_downstream_rq_3xx[1m]))",
-              "format": "time_series",
-              "instant": false,
-              "interval": "",
-              "intervalFactor": 2,
-              "legendFormat": "3xx",
               "refId": "A"
             },
             {
-              "expr": "sum(increase(envoy_listener_0_0_0_0_${listener_port}_http_ingress_http_downstream_rq_4xx[1m]))",
+              "expr": "sum(increase(envoy_http_downstream_rq_xx{envoy_response_code_class=\"3\"}[1m]))",
               "format": "time_series",
-              "instant": false,
-              "interval": "",
-              "intervalFactor": 2,
-              "legendFormat": "4xx",
+              "intervalFactor": 1,
+              "legendFormat": "3xx",
               "refId": "B"
             },
             {
-              "expr": "sum(increase(envoy_listener_0_0_0_0_${listener_port}_http_ingress_http_downstream_rq_5xx[1m]))",
+              "expr": "sum(increase(envoy_http_downstream_rq_xx{envoy_response_code_class=\"4\"}[1m]))",
               "format": "time_series",
-              "interval": "",
-              "intervalFactor": 2,
+              "intervalFactor": 1,
+              "legendFormat": "4xx",
+              "refId": "C"
+            },
+            {
+              "expr": "sum(increase(envoy_http_downstream_rq_xx{envoy_response_code_class=\"5\"}[1m]))",
+              "format": "time_series",
+              "intervalFactor": 1,
               "legendFormat": "5xx",
               "refId": "D"
-            },
-            {
-              "expr": "sum(increase(envoy_listener_0_0_0_0_80_http_ingress_http_downstream_rq_2xx[1m]))",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "refId": "F"
-            },
-            {
-              "expr": "",
-              "format": "time_series",
-              "intervalFactor": 1,
-              "refId": "C"
             }
           ],
           "thresholds": [],
           "timeFrom": null,
+          "timeRegions": [],
           "timeShift": null,
-          "title": "API Requests",
+          "title": "Ambassador Response Codes",
           "tooltip": {
             "shared": true,
             "sort": 0,
             "value_type": "individual"
           },
-          "transparent": false,
           "type": "graph",
           "xaxis": {
             "buckets": null,
@@ -507,16 +196,16 @@ data:
               "label": "RPM",
               "logBase": 1,
               "max": null,
-              "min": "0",
+              "min": null,
               "show": true
             },
             {
               "format": "short",
-              "label": "RPM",
+              "label": null,
               "logBase": 1,
               "max": null,
-              "min": "0",
-              "show": false
+              "min": null,
+              "show": true
             }
           ],
           "yaxis": {
@@ -529,31 +218,30 @@ data:
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
           "fill": 1,
           "gridPos": {
-            "h": 7,
+            "h": 8,
             "w": 24,
             "x": 0,
-            "y": 27
+            "y": 9
           },
-          "id": 6,
+          "id": 20,
           "legend": {
-            "alignAsTable": true,
-            "avg": true,
+            "avg": false,
             "current": false,
-            "max": true,
-            "min": true,
+            "max": false,
+            "min": false,
             "show": true,
             "total": false,
-            "values": true
+            "values": false
           },
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "nullPointMode": "null as zero",
+          "nullPointMode": "null",
+          "options": {},
           "percentage": false,
-          "pointradius": 5,
+          "pointradius": 2,
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
@@ -562,29 +250,142 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "envoy_listener_0_0_0_0_${listener_port}_downstream_cx_length_ms{quantile=\"0.5\"}",
+              "expr": "sum(increase(envoy_cluster_upstream_rq_xx{envoy_response_code_class=\"2\"}[1m]))",
               "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "0.5 quantile",
+              "intervalFactor": 1,
+              "legendFormat": "2xx",
               "refId": "A"
             },
             {
-              "expr": "envoy_listener_0_0_0_0_${listener_port}_downstream_cx_length_ms{quantile=\"0.9\"}",
+              "expr": "sum(increase(envoy_cluster_upstream_rq_xx{envoy_response_code_class=\"3\"}[1m]))",
               "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "0.9 quantile",
+              "intervalFactor": 1,
+              "legendFormat": "3xx",
               "refId": "B"
             },
             {
-              "expr": "envoy_listener_0_0_0_0_${listener_port}_downstream_cx_length_ms{quantile=\"0.99\"}",
+              "expr": "sum(increase(envoy_cluster_upstream_rq_xx{envoy_response_code_class=\"4\"}[1m]))",
               "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "0.99 quantile",
+              "intervalFactor": 1,
+              "legendFormat": "4xx",
               "refId": "C"
+            },
+            {
+              "expr": "sum(increase(envoy_cluster_upstream_rq_xx{envoy_response_code_class=\"5\"}[1m]))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "5xx",
+              "refId": "D"
             }
           ],
           "thresholds": [],
           "timeFrom": null,
+          "timeRegions": [],
+          "timeShift": null,
+          "title": "API Response Codes",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "RPM",
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ],
+          "yaxis": {
+            "align": false,
+            "alignLevel": null
+          }
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "fill": 1,
+          "gridPos": {
+            "h": 8,
+            "w": 24,
+            "x": 0,
+            "y": 17
+          },
+          "id": 26,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "options": {},
+          "percentage": false,
+          "pointradius": 2,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.95, sum(rate(envoy_http_downstream_cx_length_ms_bucket[5m])) by (le))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "95 percentile",
+              "refId": "A"
+            },
+            {
+              "expr": "histogram_quantile(0.9, sum(rate(envoy_http_downstream_cx_length_ms_bucket[5m])) by (le))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "90th percentile",
+              "refId": "B"
+            },
+            {
+              "expr": "histogram_quantile(0.5, sum(rate(envoy_http_downstream_cx_length_ms_bucket[5m])) by (le))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "50th percentile",
+              "refId": "C"
+            },
+            {
+              "expr": "",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "refId": "D"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeRegions": [],
           "timeShift": null,
           "title": "Downstream Connections Length",
           "tooltip": {
@@ -603,10 +404,10 @@ data:
           "yaxes": [
             {
               "format": "short",
-              "label": "milliseconds",
+              "label": "Milliseconds",
               "logBase": 1,
               "max": null,
-              "min": "0",
+              "min": null,
               "show": true
             },
             {
@@ -615,7 +416,7 @@ data:
               "logBase": 1,
               "max": null,
               "min": null,
-              "show": false
+              "show": true
             }
           ],
           "yaxis": {
@@ -628,31 +429,30 @@ data:
           "bars": false,
           "dashLength": 10,
           "dashes": false,
-          "datasource": "Prometheus",
           "fill": 1,
           "gridPos": {
-            "h": 7,
-            "w": 20,
+            "h": 8,
+            "w": 18,
             "x": 0,
-            "y": 34
+            "y": 25
           },
-          "id": 5,
+          "id": 28,
           "legend": {
-            "alignAsTable": true,
-            "avg": true,
+            "avg": false,
             "current": false,
-            "max": true,
-            "min": true,
+            "max": false,
+            "min": false,
             "show": true,
-            "total": true,
-            "values": true
+            "total": false,
+            "values": false
           },
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "nullPointMode": "null as zero",
+          "nullPointMode": "null",
+          "options": {},
           "percentage": false,
-          "pointradius": 5,
+          "pointradius": 2,
           "points": false,
           "renderer": "flot",
           "seriesOverrides": [],
@@ -661,31 +461,32 @@ data:
           "steppedLine": false,
           "targets": [
             {
-              "expr": "sum(increase(envoy_http_ingress_http_downstream_cx_http1_total[1m]))",
+              "expr": "sum(increase(envoy_http_downstream_cx_http1_active[1m]))",
               "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "HTTP/1.1",
+              "intervalFactor": 1,
+              "legendFormat": "HTTP/1",
               "refId": "A"
             },
             {
-              "expr": "sum(increase(envoy_http_ingress_http_downstream_cx_http2_total[1m]))",
+              "expr": "sum(increase(envoy_http_downstream_cx_http2_active_active[1m]))",
               "format": "time_series",
-              "intervalFactor": 2,
+              "intervalFactor": 1,
               "legendFormat": "HTTP/2",
               "refId": "B"
             },
             {
-              "expr": "sum(increase(envoy_http_ingress_http_downstream_cx_websocket_total[1m]))",
+              "expr": "sum(increase(envoy_http_downstream_cx_upgrades_active[1m]))",
               "format": "time_series",
-              "intervalFactor": 2,
-              "legendFormat": "WebSocket",
+              "intervalFactor": 1,
+              "legendFormat": "Websocket",
               "refId": "C"
             }
           ],
           "thresholds": [],
           "timeFrom": null,
+          "timeRegions": [],
           "timeShift": null,
-          "title": "Downstream Connections",
+          "title": "Active Connections",
           "tooltip": {
             "shared": true,
             "sort": 0,
@@ -701,12 +502,11 @@ data:
           },
           "yaxes": [
             {
-              "decimals": null,
               "format": "short",
               "label": "RPM",
               "logBase": 1,
               "max": null,
-              "min": "0",
+              "min": null,
               "show": true
             },
             {
@@ -715,7 +515,7 @@ data:
               "logBase": 1,
               "max": null,
               "min": null,
-              "show": false
+              "show": true
             }
           ],
           "yaxis": {
@@ -732,7 +532,6 @@ data:
             "rgba(237, 129, 40, 0.89)",
             "#d44a3a"
           ],
-          "datasource": "Prometheus",
           "format": "none",
           "gauge": {
             "maxValue": 100,
@@ -742,12 +541,12 @@ data:
             "thresholdMarkers": true
           },
           "gridPos": {
-            "h": 7,
-            "w": 4,
-            "x": 20,
-            "y": 34
+            "h": 8,
+            "w": 6,
+            "x": 18,
+            "y": 25
           },
-          "id": 4,
+          "id": 32,
           "interval": null,
           "links": [],
           "mappingType": 1,
@@ -764,6 +563,7 @@ data:
           "maxDataPoints": 100,
           "nullPointMode": "connected",
           "nullText": null,
+          "options": {},
           "postfix": "",
           "postfixFontSize": "50%",
           "prefix": "",
@@ -784,19 +584,15 @@ data:
           "tableColumn": "",
           "targets": [
             {
-              "expr": "envoy_cluster_manager_active_clusters",
-              "format": "time_series",
-              "intervalFactor": 2,
-              "refId": "A"
-            },
-            {
-              "expr": "",
+              "expr": "avg(envoy_cluster_manager_active_clusters)",
               "format": "time_series",
               "intervalFactor": 1,
-              "refId": "B"
+              "refId": "A"
             }
           ],
           "thresholds": "",
+          "timeFrom": null,
+          "timeShift": null,
           "title": "Registered Services",
           "type": "singlestat",
           "valueFontSize": "80%",

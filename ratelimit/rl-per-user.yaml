@@ -5,6 +5,6 @@ metadata:
 spec:
   domain: ambassador
   limits:
-   - pattern: [{x_limited_user: "false"}, {remote_address: "*"}]
+   - pattern: [{remote_address: "*"}]
      rate: 20
      unit: minute
