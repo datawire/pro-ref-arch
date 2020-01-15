@@ -42,23 +42,24 @@ apply-api-auth:
 	set -a && . ./env.sh && $(KUBEAPPLY) -f api-auth-with-github
 
 apply-consul-connect-integration: ## Apply YAML for integration between Consul and Ambassador Pro
-apply-consul-connect-integration: apply-consul-connect env.sh
+apply-consul-connect-integration: apply-consul-connect apply-consul-connector env.sh
+
+apply-consul-connector: ## Just apply the consul connector
+apply-consul-connector: 
 	set -a && . ./env.sh && $(KUBEAPPLY) -f consul-connect/ambassador-consul-connector.yaml
 apply-consul-connect: ## Apply Helm chart to install Consul to the cluster
-apply-consul-connect: apply-helm env.sh
-	helm repo add consul https://consul-helm-charts.storage.googleapis.com
-	[ -n "$$(helm ls --all consul)" ] || helm install --wait --name=consul consul/consul -f ./consul-connect/values.yaml
+apply-consul-connect: env.sh
+	-git clone --single-branch --branch v0.8.1 https://github.com/hashicorp/consul-helm.git
+	[ -n "$$(helm ls --all --all-namespaces | grep consul)" ] || helm install consul ./consul-helm -f ./consul-connect/values.yaml --wait
 	set -a && . ./env.sh && $(KUBEAPPLY) -f consul-connect/qotm.yaml
-apply-helm: ## Apply YAML to ensure that Helm has appropriate permissions
-apply-helm: $(KUBECONFIG)
-	$(KUBEAPPLY) -f init/helm-rbac.yaml
-	helm init --wait --service-account=tiller
 
 # TODO: grpc-web
 
 apply-jwt: ## Apply YAML for JWT validation filter
 
 apply-monitoring: ## Apply YAML for Prometheus and Grafana
+apply-monitoring:
+	-kubectl create ns monitoring
 
 apply-ratelimit: ## Apply YAML for rate limiting
 
@@ -68,6 +69,7 @@ apply-upgrade-to-pro:
 
 clean:
 	rm -f */*.o
+	rm -rf consul-helm
 
 .env.sh.ok: env.sh env.sh.example Makefile
 	@env -i PIPESTATUS=1 sh -c "set" | cut -d= -f1 > .env.sh.empty

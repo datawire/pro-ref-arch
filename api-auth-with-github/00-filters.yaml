@@ -6,7 +6,7 @@ metadata:
 spec:
   rules:
     - host: "*"
-      path: /httpbin/headers
+      path: /backend/*
       public: false
       filters:
         - name: keycloak

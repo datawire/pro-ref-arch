@@ -5,6 +5,7 @@ secret-variables.tf
 /env.sh
 tls/
 tmp/
+/consul-helm
 
 # kubeapply
 *.o

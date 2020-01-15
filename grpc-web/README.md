@@ -2,7 +2,7 @@
 
 Since Ambassador is built on Envoy, it natively supports requests between gRPC-web clients and backends. This is a simple exaple to demonstrate the functionality.
 
-Ambassador should already be configured to proxy gRPC-web requests. This is configured in the Ambassador `Module` in `ambassador/03-ambassador-service.yaml`:
+Configure Ambassador proxy gRPC-web requests by setting `enable_grpc_web: true` in the `ambassador` `Module`:
 
 ```yaml
       ---
@@ -12,7 +12,10 @@ Ambassador should already be configured to proxy gRPC-web requests. This is conf
       config:
         enable_grpc_web: True
 ```
-
+You can copy and paste this or just run:
+```
+kubectl apply -f ambassador-module.yaml
+```
 
 1. Create the gRPC-web service:
 

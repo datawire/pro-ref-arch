@@ -1,6 +1,6 @@
 # @TEMPLATE@
 ---
-apiVersion: getambassador.io/v1
+apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
   name: qotm-limited
@@ -13,7 +13,7 @@ spec:
       - request_label:
         - qotm
 ---
-apiVersion: getambassador.io/v1
+apiVersion: getambassador.io/v2
 kind: Mapping
 metadata:
   name: qotm-open
@@ -53,7 +53,7 @@ spec:
     spec:
       containers:
       - name: qotm
-        image: datawire/qotm:{{env "QOTM_VERSION"}}
+        image: datawire/qotm:1.7
         ports:
         - name: http-api
           containerPort: 5000
