@@ -1,6 +1,10 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: prometheus-operator
+    app.kubernetes.io/version: v0.35.0
   name: prometheus-operator
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -14,6 +18,10 @@ subjects:
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: prometheus-operator
+    app.kubernetes.io/version: v0.35.0
   name: prometheus-operator
 rules:
 - apiGroups:
@@ -30,6 +38,7 @@ rules:
   - prometheuses/finalizers
   - alertmanagers/finalizers
   - servicemonitors
+  - podmonitors
   - prometheusrules
   verbs:
   - '*'
@@ -53,7 +62,6 @@ rules:
   verbs:
   - list
   - delete
-  - watch
 - apiGroups:
   - ""
   resources:
@@ -62,11 +70,10 @@ rules:
   - endpoints
   verbs:
   - get
+  - list
   - create
   - update
   - delete
-  - list
-  - watch
 - apiGroups:
   - ""
   resources:
@@ -83,31 +90,35 @@ rules:
   - list
   - watch
 ---
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: prometheus-operator
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: prometheus-operator
+    app.kubernetes.io/version: v0.35.0
   name: prometheus-operator
   namespace: monitoring
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: prometheus-operator
+      app.kubernetes.io/component: controller
+      app.kubernetes.io/name: prometheus-operator
   template:
     metadata:
       labels:
-        app: prometheus-operator
+        app.kubernetes.io/component: controller
+        app.kubernetes.io/name: prometheus-operator
+        app.kubernetes.io/version: v0.35.0
     spec:
       containers:
       - args:
         - --kubelet-service=kube-system/kubelet
         - --logtostderr=true
-        - --localhost=127.0.0.1
-        - --config-reloader-image=quay.io/coreos/configmap-reload:v0.0.1
-        - --prometheus-config-reloader=quay.io/coreos/prometheus-config-reloader:v0.29.0
-        image: quay.io/coreos/prometheus-operator:v0.29.0
+        - --config-reloader-image=jimmidyson/configmap-reload:v0.3.0
+        - --prometheus-config-reloader=quay.io/coreos/prometheus-config-reloader:v0.35.0
+        image: quay.io/coreos/prometheus-operator:v0.35.0
         name: prometheus-operator
         ports:
         - containerPort: 8080
@@ -121,19 +132,6 @@ spec:
             memory: 100Mi
         securityContext:
           allowPrivilegeEscalation: false
-          readOnlyRootFilesystem: true
-      - name: readiness-probe
-        image: docker.io/byrnedo/alpine-curl
-        command: ["/bin/sh"]
-        args: ["-c", "while true; do sleep 10000; done"]
-        readinessProbe:
-          exec:
-            command:
-            - /bin/sh
-            - -c
-            # PrometheusRule is the last CRD that it creates
-            - 'curl --fail --oauth2-bearer "$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)" --cacert /var/run/secrets/kubernetes.io/serviceaccount/ca.crt "https://${KUBERNETES_SERVICE_HOST}:${KUBERNETES_SERVICE_PORT}/apis/monitoring.coreos.com/v1/prometheusrules"'
-          periodSeconds: 1
       nodeSelector:
         beta.kubernetes.io/os: linux
       securityContext:
@@ -144,5 +142,28 @@ spec:
 apiVersion: v1
 kind: ServiceAccount
 metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: prometheus-operator
+    app.kubernetes.io/version: v0.35.0
   name: prometheus-operator
   namespace: monitoring
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: prometheus-operator
+    app.kubernetes.io/version: v0.35.0
+  name: prometheus-operator
+  namespace: monitoring
+spec:
+  clusterIP: None
+  ports:
+  - name: http
+    port: 8080
+    targetPort: http
+  selector:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/name: prometheus-operator

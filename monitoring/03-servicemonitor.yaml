@@ -5,7 +5,7 @@ metadata:
   name: ambassador-monitor
   namespace: monitoring
   labels:
-    ambassador: monitoring
+    service: ambassador-monitor
 spec:
   namespaceSelector:
     matchNames:

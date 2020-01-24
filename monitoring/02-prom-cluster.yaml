@@ -11,7 +11,7 @@ spec:
   serviceAccountName: prometheus-operator
   serviceMonitorSelector:
     matchLabels:
-      ambassador: monitoring
+      service: ambassador-monitor
   resources:
     requests:
       memory: 400Mi
