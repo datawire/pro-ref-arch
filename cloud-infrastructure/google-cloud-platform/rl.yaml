@@ -1,0 +1,10 @@
+apiVersion: getambassador.io/v2
+kind: RateLimit
+metadata:
+  name: backend-string
+spec:
+  domain: ambassador
+  limits:
+  - pattern: [{generic_key: "string"}]
+    rate: 2
+    unit: minute

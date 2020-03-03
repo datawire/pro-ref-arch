@@ -18,13 +18,16 @@ sudo tee /etc/systemd/system/consul.service > /dev/null <<"EOF"
 
   [Service]
   KillSignal=INT
-  ExecStart=/usr/local/bin/consul agent -retry-join 'provider=k8s label_selector="app=consul,component=server" kubeconfig=/home/daniel/.kube/config' -data-dir=/etc/consul.d/data -config-dir=/etc/consul.d
+  ExecStart=/usr/local/bin/consul agent -retry-join 'provider=k8s label_selector="app=consul,component=server" kubeconfig=/home/nkrause/.kube/config' -data-dir=/etc/consul.d/data -config-dir=/etc/consul.d
   Restart=always
-  Environment=GOOGLE_APPLICATION_CREDENTIALS=/home/daniel/.kube/creds.json
+  Environment=GOOGLE_APPLICATION_CREDENTIALS=/home/nkrause/.kube/creds.json
 EOF
 
 sudo systemctl enable consul.service
 sudo systemctl add-wants multi-user.target consul.service
 
 sudo systemctl daemon-reload
+sudo service consul restart
+
+echo '{"service": {"name": "shopfront", "tags": ["springboot"], "address":"$(hostname -I)", "port": 80}}' > /etc/consul.d/shopfront.json
 sudo service consul restart

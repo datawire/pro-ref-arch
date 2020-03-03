@@ -6,6 +6,10 @@ variable "region_zone" {
   default = "us-central1-f"
 }
 
+variable "credentials_file_path" {
+  default = "~/.config/gcloud/datawireio-eababf109e7e.json"
+}
+
 variable "all_locations_cidr" {
   description = "Indicates access from/to all network sources/targets"
   default     = "0.0.0.0/0"

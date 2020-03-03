@@ -1,20 +1,11 @@
 ---
-apiVersion: v1
-kind: Service
+apiVersion: getambassador.io/v2
+kind: Mapping
 metadata:
- name: shopfront-consul
- annotations:
-   getambassador.io/config: |
-     ---
-     apiVersion: ambassador/v1
-     kind: Mapping
-     name: shopfront_consul
-     prefix: /shopfront/
-     service: shopfront
-     resolver: consul-dc1
-     load_balancer:
-       policy: round_robin
+  name: shopfront
 spec:
- ports:
- - name: http
-   port: 80
+  prefix: /shopfront/
+  service: shopfront
+  resolver: consul-dc1
+  load_balancer:
+    policy: round_robin

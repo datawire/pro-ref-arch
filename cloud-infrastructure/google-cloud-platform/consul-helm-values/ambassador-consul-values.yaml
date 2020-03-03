@@ -31,4 +31,4 @@ connectInject:
   default: false
 
 syncCatalog:
-  enabled: true
+  enabled: false

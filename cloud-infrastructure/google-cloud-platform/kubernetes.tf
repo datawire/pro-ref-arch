@@ -7,10 +7,6 @@ resource "google_container_cluster" "ambassador_demo" {
   remove_default_node_pool = true
   initial_node_count = 1
 
-  ip_allocation_policy {
-     use_ip_aliases = true
-  }
-
   # Setting an empty username and password explicitly disables basic auth
   master_auth {
     username = ""
