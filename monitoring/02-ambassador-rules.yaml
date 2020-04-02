@@ -10,5 +10,5 @@ spec:
   groups:
   - name: ambassador-rules
     rules:
-    - expr: rate(envoy_http_ingress_http_downstream_rq_total[1m])
-      record: cluster_ingress:envoy_http_ingress_http_downstream_rq_total:rate1m
+    - expr: sum(rate(envoy_cluster_internal_upstream_rq{envoy_cluster_name!~".*127_0_0_1.*"}[1m]))
+      record: envoy_cluster_internal_upstream_rq:rate1m

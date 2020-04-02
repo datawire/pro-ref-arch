@@ -57,9 +57,8 @@ apply-consul-connect: env.sh
 
 apply-jwt: ## Apply YAML for JWT validation filter
 
-apply-monitoring: ## Apply YAML for Prometheus and Grafana
-apply-monitoring:
-	-kubectl create ns monitoring
+# apply-monitoring: ## Apply YAML for Prometheus and Grafana
+# apply-monitoring:
 
 apply-ratelimit: ## Apply YAML for rate limiting
 
